@@ -28,7 +28,7 @@ const ListItem = styled.li`
     width: 80px;
     height: 50px;
     text-align: center;
-    border-bottom: 5px solid ${(props) => (props.current ? props.theme.darkBlueColor : "transparent")};
+    border-bottom: 5px solid ${(props) => (props.current ? props.theme.lightBlueColor : "transparent")};
     transition: border-bottom 0.5s ease-in-out;
 `;
 
