@@ -15,7 +15,7 @@ const Header = styled.header`
     left: 0;
     display: flex;
     align-items: center;
-    padding: 0px 10px;
+    padding: ${(props) => props.theme.padding};
     z-index: 10;
     /* box-shadow: 0px 1px 5px 2px rgba(251, 187, 179, 0.8); */
 `;

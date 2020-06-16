@@ -3,4 +3,5 @@ export default {
     yellowColor: "#fdcfaf",
     lightBlueColor: "#B0C1DB",
     darkBlueColor: "#8EACD0",
+    padding: "0px 10px",
 };
