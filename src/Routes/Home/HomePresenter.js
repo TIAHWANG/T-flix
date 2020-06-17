@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Section from "Components/Section";
-import Loader from "../../Components/Loader";
+import Loader from "Components/Loader";
+import Message from "Components/Message";
 
 const Container = styled.div`
     padding: ${(props) => props.theme.padding};
@@ -34,6 +35,7 @@ const HomePresenter = ({ nowPlaying, upcoming, popular, error, loading }) =>
                     ))}
                 </Section>
             )}
+            {error && <Message text={"Can't find Movie Information."} color="#e74c3c" />}
         </Container>
     );
 

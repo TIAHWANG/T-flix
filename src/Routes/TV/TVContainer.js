@@ -29,7 +29,7 @@ export default class extends React.Component {
             });
         } catch {
             this.setState({
-                error: "Can't find Movie Information.",
+                error: "Can't find TV Show Information.",
             });
         } finally {
             this.setState({
