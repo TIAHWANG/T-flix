@@ -6,6 +6,7 @@ const Container = styled.div`
     &:not(:last-child) {
         margin-bottom: 40px;
     }
+    color: white;
 `;
 
 const Title = styled.span`

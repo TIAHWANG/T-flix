@@ -44,7 +44,7 @@ const Title = styled.span`
 
 const Year = styled.span`
     font-size: 10px;
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.5);
 `;
 
 const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) => (

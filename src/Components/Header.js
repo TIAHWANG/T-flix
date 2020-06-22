@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 
 const Header = styled.header`
-    background-color: ${(props) => props.theme.pinkColor};
+    background-color: ${(props) => props.theme.black};
     height: 50px;
     width: 100%;
     color: white;
