@@ -9,6 +9,7 @@ import Poster from "Components/Poster";
 
 const Container = styled.div`
     padding: ${(props) => props.theme.padding};
+    color: white;
 `;
 
 const Form = styled.form`
