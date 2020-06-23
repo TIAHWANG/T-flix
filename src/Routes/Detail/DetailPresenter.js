@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import Loader from "Components/Loader";
+import Company from "Components/Company";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -44,7 +45,8 @@ const Cover = styled.div`
 
 const Data = styled.div`
     width: 70%;
-    margin-left: 10px;
+    margin-left: 20px;
+    position: relative;
 `;
 
 const Title = styled.h3`
@@ -72,10 +74,28 @@ const Overview = styled.p`
     font-size: 12px;
     opacity: 0.7;
     line-height: 1.5;
-    width: 50%;
+    width: 60%;
 `;
 
-const VideoContainer = styled.div``;
+const CompanyContainer = styled.div`
+    position: absolute;
+    bottom: 5px;
+    width: 60%;
+`;
+
+const CompanyName = styled.div`
+    margin: 10px 0px;
+`;
+
+const CompanyGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 5px;
+    text-align: center;
+    border-bottom: 1px solid white;
+    border-top: 1px solid white;
+    padding: 10px 0px;
+`;
 
 const DetailPresenter = ({ result, error, loading }) =>
     loading ? (
@@ -120,7 +140,16 @@ const DetailPresenter = ({ result, error, loading }) =>
                         )}
                     </ItemContainer>
                     <Overview>{result.overview}</Overview>
-                    <VideoContainer>{result.video}</VideoContainer>
+                    {result.production_companies && result.production_companies.length > 0 && (
+                        <CompanyContainer>
+                            <CompanyName>Production Companies</CompanyName>
+                            <CompanyGrid>
+                                {result.production_companies.map((company) => (
+                                    <Company key={company.id} id={company.id} name={company.name} logoUrl={company.logo_path} />
+                                ))}
+                            </CompanyGrid>
+                        </CompanyContainer>
+                    )}
                 </Data>
             </Content>
         </Container>
