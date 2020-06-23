@@ -56,7 +56,13 @@ const ItemContainer = styled.div`
     display: flex;
 `;
 
-const Item = styled.span``;
+const Item = styled.span`
+    padding: 2px 0px;
+`;
+
+const Imdb = styled.a`
+    vertical-align: text-bottom;
+`;
 
 const Divider = styled.div`
     margin: 0 10px;
@@ -68,6 +74,8 @@ const Overview = styled.p`
     line-height: 1.5;
     width: 50%;
 `;
+
+const VideoContainer = styled.div``;
 
 const DetailPresenter = ({ result, error, loading }) =>
     loading ? (
@@ -100,8 +108,19 @@ const DetailPresenter = ({ result, error, loading }) =>
                             {result.genres &&
                                 result.genres.map((genre, index) => (index === result.genres.length - 1 ? genre.name : `${genre.name} / `))}
                         </Item>
+                        {result.imdb_id && (
+                            <>
+                                <Divider>•</Divider>
+                                <Item
+                                    style={{ color: "#000000", backgroundColor: "#F5C517", fontWeight: 600, borderRadius: "3px", padding: "0px 5px" }}
+                                >
+                                    <Imdb href={`https://www.imdb.com/title/${result.imdb_id}`}>IMDb</Imdb>
+                                </Item>
+                            </>
+                        )}
                     </ItemContainer>
                     <Overview>{result.overview}</Overview>
+                    <VideoContainer>{result.video}</VideoContainer>
                 </Data>
             </Content>
         </Container>
