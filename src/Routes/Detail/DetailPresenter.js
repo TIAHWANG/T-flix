@@ -4,7 +4,9 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import Loader from "Components/Loader";
 import Company from "Components/Company";
-import Cast from "../../Components/Cast";
+import Cast from "Components/Cast";
+import Tabs from "Components/Tabs";
+import "Styles/Tabs.scss";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -51,6 +53,7 @@ const Cover = styled.div`
 `;
 
 const Data = styled.div`
+    min-width: 45%;
     width: 50%;
     margin: 10px 20px;
     position: relative;
@@ -117,13 +120,17 @@ const CastScroll = styled.div`
 `;
 
 const CastContainer = styled.div`
+    width: 100%;
     display: flex;
 `;
 
+const TabContainer = styled.div`
+    width: 100%;
+    height: auto;
+`;
+
 const CompanyContainer = styled.div`
-    position: absolute;
-    bottom: 5px;
-    width: 60%;
+    width: 100%;
 `;
 
 const CompanyName = styled.div`
@@ -187,54 +194,66 @@ const DetailPresenter = ({ result, staff, error, loading }) =>
                     </ItemContainer>
                     <Description>
                         <Overview>{result.overview}</Overview>
-                        {result.genres && result.genres.length > 0 && (
-                            <>
-                                <ItemTitle>Genres</ItemTitle>
-                                <Genre>
-                                    {result.genres.map((genre, index) => (index === result.genres.length - 1 ? genre.name : `${genre.name} • `))}
-                                </Genre>
-                            </>
-                        )}
-                        {staff && staff.cast.length > 0 && (
-                            <>
-                                <ItemTitle>Starring</ItemTitle>
-                                {staff.cast.length < 8 ? (
-                                    <CastContainer>
-                                        {staff.cast.map((actor) => (
-                                            <Cast
-                                                key={actor.id}
-                                                id={actor.id}
-                                                name={actor.name}
-                                                imageUrl={actor.profile_path}
-                                                character={actor.character}
-                                            />
-                                        ))}
-                                    </CastContainer>
-                                ) : (
-                                    <CastScroll>
-                                        {staff.cast.map((actor) => (
-                                            <Cast
-                                                key={actor.id}
-                                                id={actor.id}
-                                                name={actor.name}
-                                                imageUrl={actor.profile_path}
-                                                character={actor.character}
-                                            />
-                                        ))}
-                                    </CastScroll>
-                                )}
-                            </>
-                        )}
-                        {result.production_companies && result.production_companies.length > 0 && (
-                            <CompanyContainer>
-                                <CompanyName>Production Companies</CompanyName>
-                                <CompanyGrid>
-                                    {result.production_companies.map((company) => (
-                                        <Company key={company.id} id={company.id} name={company.name} logoUrl={company.logo_path} />
-                                    ))}
-                                </CompanyGrid>
-                            </CompanyContainer>
-                        )}
+                        <TabContainer>
+                            <Tabs>
+                                <div label="Overview">
+                                    {result.genres && result.genres.length > 0 && (
+                                        <>
+                                            <ItemTitle>Genres</ItemTitle>
+                                            <Genre>
+                                                {result.genres.map((genre, index) =>
+                                                    index === result.genres.length - 1 ? genre.name : `${genre.name} • `
+                                                )}
+                                            </Genre>
+                                        </>
+                                    )}
+                                    {staff && staff.cast.length > 0 && (
+                                        <>
+                                            <ItemTitle>Starring</ItemTitle>
+                                            {staff.cast.length <= 6 ? (
+                                                <CastContainer>
+                                                    {staff.cast.map((actor) => (
+                                                        <Cast
+                                                            key={actor.id}
+                                                            id={actor.id}
+                                                            name={actor.name}
+                                                            imageUrl={actor.profile_path}
+                                                            character={actor.character}
+                                                        />
+                                                    ))}
+                                                </CastContainer>
+                                            ) : (
+                                                <CastScroll>
+                                                    {staff.cast.map((actor) => (
+                                                        <Cast
+                                                            key={actor.id}
+                                                            id={actor.id}
+                                                            name={actor.name}
+                                                            imageUrl={actor.profile_path}
+                                                            character={actor.character}
+                                                        />
+                                                    ))}
+                                                </CastScroll>
+                                            )}
+                                        </>
+                                    )}
+                                </div>
+                                <div label="Trailers +">오예</div>
+                                <div label="More Like This">앙앙</div>
+                                <div label="Details">
+                                    {result.production_companies && result.production_companies.length > 0 && (
+                                        <CompanyContainer>
+                                            <CompanyName>Production Companies</CompanyName>
+                                            <CompanyGrid>
+                                                {result.production_companies.map((company) => (
+                                                    <Company key={company.id} id={company.id} name={company.name} logoUrl={company.logo_path} />
+                                                ))}
+                                            </CompanyGrid>
+                                        </CompanyContainer>
+                                    )}
+                                </div>
+                            </Tabs>
+                        </TabContainer>
                     </Description>
                 </Data>
             </Content>

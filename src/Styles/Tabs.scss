@@ -1,0 +1,10 @@
+.tab-list-item {
+    padding-bottom: 5px;
+    cursor: pointer;
+    border-bottom: 5px solid transparent;
+    transition: border-bottom 0.5s ease-in-out;
+}
+
+.tab-list-active {
+    border-bottom: 5px solid pink;
+}
