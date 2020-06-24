@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import Loader from "Components/Loader";
 import Company from "Components/Company";
+import Cast from "../../Components/Cast";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -11,6 +12,9 @@ const Container = styled.div`
     position: relative;
     padding: 50px;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const BackDrop = styled.div`
@@ -28,14 +32,17 @@ const BackDrop = styled.div`
 
 const Content = styled.div`
     display: flex;
-    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    width: 80%;
     height: 100%;
     position: relative;
     z-index: 1;
+    font-size: 18px;
 `;
 
 const Cover = styled.div`
-    width: 30%;
+    width: 50%;
     height: 100%;
     background-image: url(${(props) => props.bgImage});
     background-position: center center;
@@ -44,13 +51,14 @@ const Cover = styled.div`
 `;
 
 const Data = styled.div`
-    width: 70%;
-    margin-left: 20px;
+    width: 50%;
+    margin: 10px 20px;
     position: relative;
 `;
 
-const Title = styled.h3`
-    font-size: 32px;
+const MovieTitle = styled.h3`
+    font-size: 30px;
+    font-weight: 600;
 `;
 
 const ItemContainer = styled.div`
@@ -70,11 +78,46 @@ const Divider = styled.div`
     margin: 0 10px;
 `;
 
-const Overview = styled.p`
-    font-size: 12px;
-    opacity: 0.7;
+const Description = styled.div`
     line-height: 1.5;
-    width: 60%;
+    width: 100%;
+`;
+
+const Overview = styled.p`
+    opacity: 0.7;
+    margin-bottom: 20px;
+`;
+
+const ItemTitle = styled.div`
+    font-weight: 600;
+    &:not(:first-child) {
+        margin-top: 20px;
+    }
+    margin-bottom: 5px;
+    opacity: 0.9;
+`;
+
+const Genre = styled.div`
+    font-size: 16px;
+    opacity: 0.9;
+`;
+
+const CastScroll = styled.div`
+    display: flex;
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+        height: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: ${(props) => props.theme.pinkColor};
+    }
+    &::-webkit-scrollbar-track {
+        border: 1px solid ${(props) => props.theme.pinkColor};
+    }
+`;
+
+const CastContainer = styled.div`
+    display: flex;
 `;
 
 const CompanyContainer = styled.div`
@@ -95,9 +138,10 @@ const CompanyGrid = styled.div`
     border-bottom: 1px solid white;
     border-top: 1px solid white;
     padding: 10px 0px;
+    background-color: rgba(255, 255, 255, 0.3);
 `;
 
-const DetailPresenter = ({ result, error, loading }) =>
+const DetailPresenter = ({ result, staff, error, loading }) =>
     loading ? (
         <>
             <Helmet>
@@ -118,16 +162,11 @@ const DetailPresenter = ({ result, error, loading }) =>
                     }
                 />
                 <Data>
-                    <Title>{result.title ? result.title : result.name}</Title>
+                    <MovieTitle>{result.title ? result.title : result.name}</MovieTitle>
                     <ItemContainer>
                         <Item>{result.release_date ? result.release_date.substring(0, 4) : result.first_air_date.substring(0, 4)}</Item>
                         <Divider>•</Divider>
                         <Item>{result.episode_run_time ? result.episode_run_time[0] : result.runtime !== 0 ? result.runtime : 0} min</Item>
-                        <Divider>•</Divider>
-                        <Item>
-                            {result.genres &&
-                                result.genres.map((genre, index) => (index === result.genres.length - 1 ? genre.name : `${genre.name} / `))}
-                        </Item>
                         {result.imdb_id && (
                             <>
                                 <Divider>•</Divider>
@@ -138,18 +177,65 @@ const DetailPresenter = ({ result, error, loading }) =>
                                 </Item>
                             </>
                         )}
+                        <Divider>•</Divider>
+                        <Item>
+                            <span role="img" aria-label="rating">
+                                ⭐{" "}
+                            </span>
+                            {result.vote_average} / 10
+                        </Item>
                     </ItemContainer>
-                    <Overview>{result.overview}</Overview>
-                    {result.production_companies && result.production_companies.length > 0 && (
-                        <CompanyContainer>
-                            <CompanyName>Production Companies</CompanyName>
-                            <CompanyGrid>
-                                {result.production_companies.map((company) => (
-                                    <Company key={company.id} id={company.id} name={company.name} logoUrl={company.logo_path} />
-                                ))}
-                            </CompanyGrid>
-                        </CompanyContainer>
-                    )}
+                    <Description>
+                        <Overview>{result.overview}</Overview>
+                        {result.genres && result.genres.length > 0 && (
+                            <>
+                                <ItemTitle>Genres</ItemTitle>
+                                <Genre>
+                                    {result.genres.map((genre, index) => (index === result.genres.length - 1 ? genre.name : `${genre.name} • `))}
+                                </Genre>
+                            </>
+                        )}
+                        {staff && staff.cast.length > 0 && (
+                            <>
+                                <ItemTitle>Starring</ItemTitle>
+                                {staff.cast.length < 8 ? (
+                                    <CastContainer>
+                                        {staff.cast.map((actor) => (
+                                            <Cast
+                                                key={actor.id}
+                                                id={actor.id}
+                                                name={actor.name}
+                                                imageUrl={actor.profile_path}
+                                                character={actor.character}
+                                            />
+                                        ))}
+                                    </CastContainer>
+                                ) : (
+                                    <CastScroll>
+                                        {staff.cast.map((actor) => (
+                                            <Cast
+                                                key={actor.id}
+                                                id={actor.id}
+                                                name={actor.name}
+                                                imageUrl={actor.profile_path}
+                                                character={actor.character}
+                                            />
+                                        ))}
+                                    </CastScroll>
+                                )}
+                            </>
+                        )}
+                        {result.production_companies && result.production_companies.length > 0 && (
+                            <CompanyContainer>
+                                <CompanyName>Production Companies</CompanyName>
+                                <CompanyGrid>
+                                    {result.production_companies.map((company) => (
+                                        <Company key={company.id} id={company.id} name={company.name} logoUrl={company.logo_path} />
+                                    ))}
+                                </CompanyGrid>
+                            </CompanyContainer>
+                        )}
+                    </Description>
                 </Data>
             </Content>
         </Container>
