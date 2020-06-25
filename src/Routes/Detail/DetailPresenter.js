@@ -6,6 +6,7 @@ import Loader from "Components/Loader";
 import Company from "Components/Company";
 import Cast from "Components/Cast";
 import Tabs from "Components/Tabs";
+import Video from "Components/Video";
 import "Styles/Tabs.scss";
 
 const Container = styled.div`
@@ -84,6 +85,17 @@ const Divider = styled.div`
 const Description = styled.div`
     line-height: 1.5;
     width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: ${(props) => props.theme.pinkColor};
+    }
+    &::-webkit-scrollbar-track {
+        border: 1px solid ${(props) => props.theme.pinkColor};
+    }
 `;
 
 const Overview = styled.p`
@@ -107,15 +119,13 @@ const Genre = styled.div`
 
 const CastScroll = styled.div`
     display: flex;
+    margin-right: 10px;
     overflow-x: scroll;
     &::-webkit-scrollbar {
         height: 4px;
     }
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};
-    }
-    &::-webkit-scrollbar-track {
-        border: 1px solid ${(props) => props.theme.pinkColor};
     }
 `;
 
@@ -124,9 +134,16 @@ const CastContainer = styled.div`
     display: flex;
 `;
 
-const TabContainer = styled.div`
-    width: 100%;
-    height: auto;
+const VideoContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    margin-right: 10px;
+`;
+
+const NoVideoMessage = styled.div`
+    font-size: 16px;
+    opacity: 0.9;
 `;
 
 const CompanyContainer = styled.div`
@@ -148,6 +165,10 @@ const CompanyGrid = styled.div`
     background-color: rgba(255, 255, 255, 0.3);
 `;
 
+const TabContainer = styled.div`
+    width: 100%;
+    height: auto;
+`;
 const DetailPresenter = ({ result, staff, error, loading }) =>
     loading ? (
         <>
@@ -238,7 +259,23 @@ const DetailPresenter = ({ result, staff, error, loading }) =>
                                         </>
                                     )}
                                 </div>
-                                <div label="Trailers +">오예</div>
+                                <div label="Trailers +">
+                                    <ItemTitle>Videos</ItemTitle>
+                                    <VideoContainer>
+                                        {result.videos.results.length > 0 ? (
+                                            result.videos.results.map((video) => (
+                                                <Video key={video.id} id={video.id} videoUrl={video.key} name={video.name} />
+                                            ))
+                                        ) : (
+                                            <NoVideoMessage>
+                                                No Related Videos{" "}
+                                                <span role="img" aria-label="no videos">
+                                                    😢
+                                                </span>
+                                            </NoVideoMessage>
+                                        )}
+                                    </VideoContainer>
+                                </div>
                                 <div label="More Like This">앙앙</div>
                                 <div label="Details">
                                     {result.production_companies && result.production_companies.length > 0 && (
