@@ -11,6 +11,7 @@ export default class extends React.Component {
         this.state = {
             result: null,
             staff: null,
+            recommend: null,
             error: null,
             loading: true,
             isMovie: pathname.includes("/movie/"),
@@ -31,13 +32,16 @@ export default class extends React.Component {
         }
         let result = null;
         let staff = null;
+        let recommend = null;
         try {
             if (isMovie) {
                 ({ data: result } = await moviesApi.movieDetail(parsedId));
                 ({ data: staff } = await moviesApi.movieCast(parsedId));
+                ({ data: recommend } = await moviesApi.recommendMovie(parsedId));
             } else {
                 ({ data: result } = await tvApi.showDetail(parsedId));
                 ({ data: staff } = await tvApi.tvCast(parsedId));
+                ({ data: recommend } = await tvApi.recommendTv(parsedId));
             }
         } catch {
             this.setState({
@@ -48,13 +52,14 @@ export default class extends React.Component {
                 loading: false,
                 result,
                 staff,
+                recommend,
             });
         }
     }
 
     render() {
-        const { result, staff, error, loading } = this.state;
+        const { result, staff, recommend, error, loading } = this.state;
         console.log(this.state);
-        return <DetailPresenter result={result} staff={staff} error={error} loading={loading} />;
+        return <DetailPresenter result={result} staff={staff} recommend={recommend} error={error} loading={loading} />;
     }
 }

@@ -3,18 +3,12 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import Tab from "./Tab";
 
-const ListContainer = styled.div`
+const TabList = styled.ul`
     width: 100%;
     display: flex;
-    justify-content: center;
-`;
-
-const TabList = styled.ul`
-    width: 30%;
-    display: flex;
     justify-content: space-between;
-    position: fixed;
-    bottom: 50px;
+    position: absolute;
+    bottom: 0px;
 `;
 
 const TabContent = styled.div``;
@@ -50,14 +44,12 @@ export default class extends React.Component {
                         return child.props.children;
                     })}
                 </TabContent>
-                <ListContainer>
-                    <TabList>
-                        {children.map((child) => {
-                            const { label } = child.props;
-                            return <Tab activeTab={activeTab} key={label} label={label} onClick={onClickTabItem} />;
-                        })}
-                    </TabList>
-                </ListContainer>
+                <TabList>
+                    {children.map((child) => {
+                        const { label } = child.props;
+                        return <Tab activeTab={activeTab} key={label} label={label} onClick={onClickTabItem} />;
+                    })}
+                </TabList>
             </>
         );
     }

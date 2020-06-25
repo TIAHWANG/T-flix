@@ -7,6 +7,7 @@ import Company from "Components/Company";
 import Cast from "Components/Cast";
 import Tabs from "Components/Tabs";
 import Video from "Components/Video";
+import Poster from "Components/Poster";
 import "Styles/Tabs.scss";
 
 const Container = styled.div`
@@ -56,8 +57,9 @@ const Cover = styled.div`
 const Data = styled.div`
     min-width: 45%;
     width: 50%;
-    margin: 10px 20px;
+    margin: 10px 20px 0px;
     position: relative;
+    overflow: hidden;
 `;
 
 const MovieTitle = styled.h3`
@@ -85,7 +87,7 @@ const Divider = styled.div`
 const Description = styled.div`
     line-height: 1.5;
     width: 100%;
-    height: 100%;
+    height: 83%;
     overflow-y: auto;
     &::-webkit-scrollbar {
         width: 4px;
@@ -96,6 +98,10 @@ const Description = styled.div`
     &::-webkit-scrollbar-track {
         border: 1px solid ${(props) => props.theme.pinkColor};
     }
+`;
+
+const TabContainer = styled.div`
+    width: 100%;
 `;
 
 const Overview = styled.p`
@@ -146,6 +152,13 @@ const NoVideoMessage = styled.div`
     opacity: 0.9;
 `;
 
+const RecommendContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    margin-right: 10px;
+`;
+
 const CompanyContainer = styled.div`
     width: 100%;
 `;
@@ -165,11 +178,7 @@ const CompanyGrid = styled.div`
     background-color: rgba(255, 255, 255, 0.3);
 `;
 
-const TabContainer = styled.div`
-    width: 100%;
-    height: auto;
-`;
-const DetailPresenter = ({ result, staff, error, loading }) =>
+const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
     loading ? (
         <>
             <Helmet>
@@ -276,7 +285,25 @@ const DetailPresenter = ({ result, staff, error, loading }) =>
                                         )}
                                     </VideoContainer>
                                 </div>
-                                <div label="More Like This">앙앙</div>
+                                <div label="More Like This">
+                                    <>
+                                        <ItemTitle>Recommendations</ItemTitle>
+                                        <RecommendContainer>
+                                            {recommend.results && recommend.results.length > 0
+                                                ? recommend.results.map((movie) => (
+                                                      <Poster
+                                                          key={movie.id}
+                                                          id={movie.id}
+                                                          imageUrl={movie.backdrop_path}
+                                                          title={movie.title ? movie.title : movie.name}
+                                                          rating={movie.vote_average}
+                                                          isMovie={movie.title ? true : false}
+                                                      />
+                                                  ))
+                                                : null}
+                                        </RecommendContainer>
+                                    </>
+                                </div>
                                 <div label="Details">
                                     {result.production_companies && result.production_companies.length > 0 && (
                                         <CompanyContainer>

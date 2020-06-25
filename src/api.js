@@ -28,6 +28,7 @@ export const moviesApi = {
             },
         }),
     movieCast: (id) => api.get(`movie/${id}/credits`),
+    recommendMovie: (id) => api.get(`movie/${id}/recommendations`),
 };
 
 export const tvApi = {
@@ -47,4 +48,5 @@ export const tvApi = {
             },
         }),
     tvCast: (id) => api.get(`tv/${id}/credits`),
+    recommendTv: (id) => api.get(`tv/${id}/recommendations`),
 };
