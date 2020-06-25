@@ -18,7 +18,8 @@ export default class extends React.Component {
         };
     }
 
-    async componentDidMount() {
+    getMovieData = async () => {
+        console.log(this.props);
         const {
             match: {
                 params: { id },
@@ -55,11 +56,18 @@ export default class extends React.Component {
                 recommend,
             });
         }
-    }
+    };
 
+    componentDidMount() {
+        this.getMovieData();
+    }
+    componentDidUpdate(prevProps) {
+        if (this.props.location.pathname !== prevProps.location.pathname) {
+            this.getMovieData();
+        }
+    }
     render() {
         const { result, staff, recommend, error, loading } = this.state;
-        console.log(this.state);
         return <DetailPresenter result={result} staff={staff} recommend={recommend} error={error} loading={loading} />;
     }
 }

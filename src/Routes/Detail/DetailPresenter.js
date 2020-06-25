@@ -191,7 +191,7 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
             <Helmet>
                 <title>{result.title ? result.title : result.name} | T-flix</title>
             </Helmet>
-            <BackDrop bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`} />
+            <BackDrop bgImage={result.backdrop_path ? `https://image.tmdb.org/t/p/original${result.backdrop_path}` : null} />
             <Content>
                 <Cover
                     bgImage={
