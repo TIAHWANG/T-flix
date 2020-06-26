@@ -7,6 +7,7 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 `;
 
 const Logo = styled.div`
@@ -15,7 +16,7 @@ const Logo = styled.div`
     background-repeat: no-repeat;
     background-position: center center;
     width: 80px;
-    height: 40px;
+    height: 80%;
     margin-bottom: 10px;
 `;
 

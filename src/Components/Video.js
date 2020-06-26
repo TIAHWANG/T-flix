@@ -12,6 +12,7 @@ const Container = styled.div`
 const Item = styled.iframe`
     width: 100%;
     margin-bottom: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
 `;
 
 const Name = styled.span`

@@ -9,6 +9,7 @@ import Tabs from "Components/Tabs";
 import Video from "Components/Video";
 import Poster from "Components/Poster";
 import "Styles/Tabs.scss";
+import Country from "../../Components/Country";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -147,7 +148,7 @@ const VideoContainer = styled.div`
     margin-right: 10px;
 `;
 
-const NoVideoMessage = styled.div`
+const NoContentMessage = styled.div`
     font-size: 16px;
     opacity: 0.9;
 `;
@@ -163,19 +164,15 @@ const CompanyContainer = styled.div`
     width: 100%;
 `;
 
-const CompanyName = styled.div`
-    margin: 10px 0px;
-`;
-
 const CompanyGrid = styled.div`
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 5px;
     text-align: center;
-    border-bottom: 1px solid white;
-    border-top: 1px solid white;
-    padding: 10px 0px;
-    background-color: rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid ${(props) => props.theme.pinkColor};
+    border-top: 1px solid ${(props) => props.theme.pinkColor};
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
 `;
 
 const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
@@ -276,44 +273,64 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                                 <Video key={video.id} id={video.id} videoUrl={video.key} name={video.name} />
                                             ))
                                         ) : (
-                                            <NoVideoMessage>
+                                            <NoContentMessage>
                                                 No Related Videos{" "}
                                                 <span role="img" aria-label="no videos">
                                                     😢
                                                 </span>
-                                            </NoVideoMessage>
+                                            </NoContentMessage>
                                         )}
                                     </VideoContainer>
                                 </div>
                                 <div label="More Like This">
                                     <>
                                         <ItemTitle>Recommendations</ItemTitle>
-                                        <RecommendContainer>
-                                            {recommend.results && recommend.results.length > 0
-                                                ? recommend.results.map((movie) => (
-                                                      <Poster
-                                                          key={movie.id}
-                                                          id={movie.id}
-                                                          imageUrl={movie.backdrop_path}
-                                                          title={movie.title ? movie.title : movie.name}
-                                                          rating={movie.vote_average}
-                                                          isMovie={movie.title ? true : false}
-                                                      />
-                                                  ))
-                                                : null}
-                                        </RecommendContainer>
+                                        {recommend.results && recommend.results.length > 0 ? (
+                                            <RecommendContainer>
+                                                {recommend.results.map((movie) => (
+                                                    <Poster
+                                                        key={movie.id}
+                                                        id={movie.id}
+                                                        imageUrl={movie.backdrop_path}
+                                                        title={movie.title ? movie.title : movie.name}
+                                                        rating={movie.vote_average}
+                                                        isMovie={movie.title ? true : false}
+                                                    />
+                                                ))}
+                                            </RecommendContainer>
+                                        ) : (
+                                            <NoContentMessage>
+                                                Nothing to recommend{" "}
+                                                <span role="img" aria-label="no videos">
+                                                    😢
+                                                </span>
+                                            </NoContentMessage>
+                                        )}
                                     </>
                                 </div>
                                 <div label="Details">
-                                    {result.production_companies && result.production_companies.length > 0 && (
+                                    {result.production_countries && result.production_countries.length > 0 && (
                                         <CompanyContainer>
-                                            <CompanyName>Production Companies</CompanyName>
-                                            <CompanyGrid>
+                                            <ItemTitle>Production Countries</ItemTitle>
+                                            <CompanyGrid style={{ gridAutoRows: "40px" }}>
+                                                {result.production_countries.map((country) => (
+                                                    <Country key={country.iso_3166_1} id={country.iso_3166_1} name={country.name} />
+                                                ))}
+                                            </CompanyGrid>
+                                        </CompanyContainer>
+                                    )}
+                                    {result.production_companies && result.production_companies.length > 0 && (
+                                        <CompanyContainer style={{ marginTop: "20px" }}>
+                                            <ItemTitle>Production Companies</ItemTitle>
+                                            <CompanyGrid style={{ gridAutoRows: "80px" }}>
                                                 {result.production_companies.map((company) => (
                                                     <Company key={company.id} id={company.id} name={company.name} logoUrl={company.logo_path} />
                                                 ))}
                                             </CompanyGrid>
                                         </CompanyContainer>
+                                    )}
+                                    {result.production_countries.length === 0 && result.production_companies.length === 0 && (
+                                        <ItemTitle>No Detail Information</ItemTitle>
                                     )}
                                 </div>
                             </Tabs>

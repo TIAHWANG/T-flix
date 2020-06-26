@@ -19,7 +19,6 @@ export default class extends React.Component {
     }
 
     getMovieData = async () => {
-        console.log(this.props);
         const {
             match: {
                 params: { id },
@@ -68,6 +67,7 @@ export default class extends React.Component {
     }
     render() {
         const { result, staff, recommend, error, loading } = this.state;
+        console.log(recommend);
         return <DetailPresenter result={result} staff={staff} recommend={recommend} error={error} loading={loading} />;
     }
 }
