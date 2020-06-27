@@ -50,3 +50,12 @@ export const tvApi = {
     tvCast: (id) => api.get(`tv/${id}/credits`),
     recommendTv: (id) => api.get(`tv/${id}/recommendations`),
 };
+
+export const personApi = {
+    person: (id) =>
+        api.get(`person/${id}`, {
+            params: {
+                append_to_response: "images",
+            },
+        }),
+};

@@ -60,6 +60,7 @@ export default class extends React.Component {
     componentDidMount() {
         this.getMovieData();
     }
+
     componentDidUpdate(prevProps) {
         if (this.props.location.pathname !== prevProps.location.pathname) {
             this.getMovieData();
@@ -67,7 +68,6 @@ export default class extends React.Component {
     }
     render() {
         const { result, staff, recommend, error, loading } = this.state;
-        console.log(recommend);
         return <DetailPresenter result={result} staff={staff} recommend={recommend} error={error} loading={loading} />;
     }
 }

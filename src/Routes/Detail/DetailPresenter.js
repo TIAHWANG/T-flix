@@ -207,7 +207,9 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                 <Item
                                     style={{ color: "#000000", backgroundColor: "#F5C517", fontWeight: 600, borderRadius: "3px", padding: "0px 5px" }}
                                 >
-                                    <Imdb href={`https://www.imdb.com/title/${result.imdb_id}`}>IMDb</Imdb>
+                                    <Imdb target="_blank" href={`https://www.imdb.com/title/${result.imdb_id}`}>
+                                        IMDb
+                                    </Imdb>
                                 </Item>
                             </>
                         )}
@@ -234,9 +236,9 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             </Genre>
                                         </>
                                     )}
-                                    {staff && staff.cast.length > 0 && (
+                                    <ItemTitle>Starring</ItemTitle>
+                                    {staff && staff.cast.length > 0 ? (
                                         <>
-                                            <ItemTitle>Starring</ItemTitle>
                                             {staff.cast.length <= 6 ? (
                                                 <CastContainer>
                                                     {staff.cast.map((actor) => (
@@ -263,6 +265,13 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                                 </CastScroll>
                                             )}
                                         </>
+                                    ) : (
+                                        <NoContentMessage>
+                                            No Starring Information{" "}
+                                            <span role="img" aria-label="no videos">
+                                                😢
+                                            </span>
+                                        </NoContentMessage>
                                     )}
                                 </div>
                                 <div label="Trailers +">
@@ -300,7 +309,7 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             </RecommendContainer>
                                         ) : (
                                             <NoContentMessage>
-                                                Nothing to recommend{" "}
+                                                Nothing to Recommend{" "}
                                                 <span role="img" aria-label="no videos">
                                                     😢
                                                 </span>
@@ -309,29 +318,41 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                     </>
                                 </div>
                                 <div label="Details">
-                                    {result.production_countries && result.production_countries.length > 0 && (
-                                        <CompanyContainer>
-                                            <ItemTitle>Production Countries</ItemTitle>
+                                    <CompanyContainer>
+                                        <ItemTitle>Production Countries</ItemTitle>
+                                        {result.production_countries && result.production_countries.length > 0 ? (
                                             <CompanyGrid style={{ gridAutoRows: "40px" }}>
                                                 {result.production_countries.map((country) => (
                                                     <Country key={country.iso_3166_1} id={country.iso_3166_1} name={country.name} />
                                                 ))}
                                             </CompanyGrid>
-                                        </CompanyContainer>
-                                    )}
-                                    {result.production_companies && result.production_companies.length > 0 && (
-                                        <CompanyContainer style={{ marginTop: "20px" }}>
-                                            <ItemTitle>Production Companies</ItemTitle>
+                                        ) : (
+                                            <NoContentMessage>
+                                                No Detail Information{" "}
+                                                <span role="img" aria-label="no videos">
+                                                    😢
+                                                </span>
+                                            </NoContentMessage>
+                                        )}
+                                    </CompanyContainer>
+
+                                    <CompanyContainer style={{ marginTop: "20px" }}>
+                                        <ItemTitle>Production Companies</ItemTitle>
+                                        {result.production_companies && result.production_companies.length > 0 ? (
                                             <CompanyGrid style={{ gridAutoRows: "80px" }}>
                                                 {result.production_companies.map((company) => (
                                                     <Company key={company.id} id={company.id} name={company.name} logoUrl={company.logo_path} />
                                                 ))}
                                             </CompanyGrid>
-                                        </CompanyContainer>
-                                    )}
-                                    {result.production_countries.length === 0 && result.production_companies.length === 0 && (
-                                        <ItemTitle>No Detail Information</ItemTitle>
-                                    )}
+                                        ) : (
+                                            <NoContentMessage>
+                                                No Detail Information{" "}
+                                                <span role="img" aria-label="no videos">
+                                                    😢
+                                                </span>
+                                            </NoContentMessage>
+                                        )}
+                                    </CompanyContainer>
                                 </div>
                             </Tabs>
                         </TabContainer>

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
     margin-top: 5px;
@@ -32,11 +33,13 @@ const Character = styled.div`
 `;
 
 const Cast = ({ id, name, character, imageUrl }) => (
-    <Container>
-        <Image bgUrl={imageUrl ? `https://image.tmdb.org/t/p/original${imageUrl}` : require("../Assets/noActor.png")} />
-        <Name>{name && name.length > 10 ? `${name.substring(0, 10)}..` : name}</Name>
-        <Character>{character && character.length > 13 ? `${character.substring(0, 13)}..` : character}</Character>
-    </Container>
+    <Link to={`/person/${id}`}>
+        <Container>
+            <Image bgUrl={imageUrl ? `https://image.tmdb.org/t/p/original${imageUrl}` : require("../Assets/noActor.png")} />
+            <Name>{name && name.length > 10 ? `${name.substring(0, 10)}..` : name}</Name>
+            <Character>{character && character.length > 13 ? `${character.substring(0, 13)}..` : character}</Character>
+        </Container>
+    </Link>
 );
 
 Cast.propTypes = {
