@@ -8,8 +8,7 @@ import Cast from "Components/Cast";
 import Tabs from "Components/Tabs";
 import Video from "Components/Video";
 import Poster from "Components/Poster";
-import "Styles/Tabs.scss";
-import Country from "../../Components/Country";
+import Country from "Components/Country";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
