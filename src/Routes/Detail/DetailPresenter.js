@@ -10,6 +10,7 @@ import Video from "Components/Video";
 import Country from "Components/Country";
 import Recommend from "Components/Recommend";
 import CollectionPoster from "Components/CollectionPoster";
+import Season from "Components/Season";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -60,7 +61,6 @@ const Data = styled.div`
     width: 50%;
     margin: 10px 20px 0px;
     position: relative;
-    overflow: hidden;
 `;
 
 const MovieTitle = styled.h3`
@@ -99,7 +99,7 @@ const Description = styled.div`
     &::-webkit-scrollbar-track {
         border: 1px solid ${(props) => props.theme.pinkColor};
     }
-    padding-right: 5px;
+    padding-right: 10px;
 `;
 
 const TabContainer = styled.div`
@@ -144,6 +144,22 @@ const CastContainer = styled.div`
 
 const CollectionContainer = styled.div`
     width: 100%;
+`;
+
+const SeasonContainer = styled.div`
+    width: 100%;
+    display: flex;
+`;
+
+const SeasonScroll = styled.div`
+    display: flex;
+    overflow-x: auto;
+    &::-webkit-scrollbar {
+        height: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: ${(props) => props.theme.pinkColor};
+    }
 `;
 
 const VideoContainer = styled.div`
@@ -244,45 +260,31 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                     )}
                                     <ItemTitle>Starring</ItemTitle>
                                     {staff && staff.cast.length > 0 ? (
-                                        <>
-                                            {staff.cast.length <= 6 ? (
-                                                <CastContainer>
-                                                    {staff.cast.map((actor) => (
-                                                        <Cast
-                                                            key={actor.id}
-                                                            id={actor.id}
-                                                            name={actor.name}
-                                                            imageUrl={actor.profile_path}
-                                                            character={actor.character}
-                                                        />
-                                                    ))}
-                                                </CastContainer>
-                                            ) : (
-                                                <CastScroll>
-                                                    {staff.cast.map((actor) => (
-                                                        <Cast
-                                                            key={actor.id}
-                                                            id={actor.id}
-                                                            name={actor.name}
-                                                            imageUrl={actor.profile_path}
-                                                            character={actor.character}
-                                                        />
-                                                    ))}
-                                                </CastScroll>
-                                            )}
-                                            {result.belongs_to_collection && (
-                                                <>
-                                                    <ItemTitle>Collection</ItemTitle>
-                                                    <CollectionContainer>
-                                                        <CollectionPoster
-                                                            id={result.belongs_to_collection.id}
-                                                            imageUrl={result.belongs_to_collection.poster_path}
-                                                            title={result.belongs_to_collection.name}
-                                                        />
-                                                    </CollectionContainer>
-                                                </>
-                                            )}
-                                        </>
+                                        staff.cast.length <= 3 ? (
+                                            <CastContainer>
+                                                {staff.cast.map((actor) => (
+                                                    <Cast
+                                                        key={actor.id}
+                                                        id={actor.id}
+                                                        name={actor.name}
+                                                        imageUrl={actor.profile_path}
+                                                        character={actor.character}
+                                                    />
+                                                ))}
+                                            </CastContainer>
+                                        ) : (
+                                            <CastScroll>
+                                                {staff.cast.map((actor) => (
+                                                    <Cast
+                                                        key={actor.id}
+                                                        id={actor.id}
+                                                        name={actor.name}
+                                                        imageUrl={actor.profile_path}
+                                                        character={actor.character}
+                                                    />
+                                                ))}
+                                            </CastScroll>
+                                        )
                                     ) : (
                                         <NoContentMessage>
                                             No Starring Information{" "}
@@ -291,6 +293,72 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             </span>
                                         </NoContentMessage>
                                     )}
+                                    {result.belongs_to_collection && (
+                                        <>
+                                            <ItemTitle>Collection</ItemTitle>
+                                            <CollectionContainer>
+                                                <CollectionPoster
+                                                    id={result.belongs_to_collection.id}
+                                                    imageUrl={result.belongs_to_collection.poster_path}
+                                                    title={result.belongs_to_collection.name}
+                                                />
+                                            </CollectionContainer>
+                                        </>
+                                    )}
+                                    {result.created_by && result.created_by.length > 0 ? (
+                                        result.created_by.length <= 6 ? (
+                                            <>
+                                                <ItemTitle>Creator</ItemTitle>
+                                                <CastContainer>
+                                                    {result.created_by.map((creator) => (
+                                                        <Cast key={creator.id} id={creator.id} name={creator.name} imageUrl={creator.profile_path} />
+                                                    ))}
+                                                </CastContainer>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <ItemTitle>Creator</ItemTitle>
+                                                <CastScroll>
+                                                    {result.created_by.map((creator) => (
+                                                        <Cast key={creator.id} id={creator.id} name={creator.name} imageUrl={creator.profile_path} />
+                                                    ))}
+                                                </CastScroll>
+                                            </>
+                                        )
+                                    ) : null}
+                                    {result.seasons && result.seasons.length > 0 ? (
+                                        result.seasons.length <= 3 ? (
+                                            <>
+                                                <ItemTitle>Seasons</ItemTitle>
+                                                <SeasonContainer>
+                                                    {result.seasons.map((season) => (
+                                                        <Season
+                                                            key={season.id}
+                                                            id={season.season_number}
+                                                            seasonNum={season.name}
+                                                            imageUrl={season.poster_path}
+                                                            title={result.name}
+                                                        />
+                                                    ))}
+                                                </SeasonContainer>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <ItemTitle>Seasons</ItemTitle>
+                                                <SeasonScroll>
+                                                    {result.seasons.map((season) => (
+                                                        <Season
+                                                            key={season.id}
+                                                            id={season.season_number}
+                                                            seasonNum={season.name}
+                                                            imageUrl={season.poster_path}
+                                                            title={result.name}
+                                                        />
+                                                    ))}
+                                                </SeasonScroll>
+                                            </>
+                                        )
+                                    ) : null}
                                 </div>
                                 <div label="Trailers +">
                                     <ItemTitle>Videos</ItemTitle>
@@ -337,24 +405,6 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                 </div>
                                 <div label="Details">
                                     <CompanyContainer>
-                                        <ItemTitle>Production Countries</ItemTitle>
-                                        {result.production_countries && result.production_countries.length > 0 ? (
-                                            <CompanyGrid style={{ gridAutoRows: "40px" }}>
-                                                {result.production_countries.map((country) => (
-                                                    <Country key={country.iso_3166_1} id={country.iso_3166_1} name={country.name} />
-                                                ))}
-                                            </CompanyGrid>
-                                        ) : (
-                                            <NoContentMessage>
-                                                No Information{" "}
-                                                <span role="img" aria-label="no videos">
-                                                    😢
-                                                </span>
-                                            </NoContentMessage>
-                                        )}
-                                    </CompanyContainer>
-
-                                    <CompanyContainer style={{ marginTop: "20px" }}>
                                         <ItemTitle>Production Companies</ItemTitle>
                                         {result.production_companies && result.production_companies.length > 0 ? (
                                             <CompanyGrid style={{ gridAutoRows: "80px" }}>
@@ -371,6 +421,26 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             </NoContentMessage>
                                         )}
                                     </CompanyContainer>
+                                    {result.production_countries && result.production_countries.length > 0 && (
+                                        <CompanyContainer style={{ marginTop: "20px" }}>
+                                            <ItemTitle>Production Countries</ItemTitle>
+                                            <CompanyGrid style={{ gridAutoRows: "40px" }}>
+                                                {result.production_countries.map((country) => (
+                                                    <Country key={country.iso_3166_1} id={country.iso_3166_1} name={country.name} />
+                                                ))}
+                                            </CompanyGrid>
+                                        </CompanyContainer>
+                                    )}
+                                    {result.networks && result.networks.length > 0 && (
+                                        <CompanyContainer style={{ marginTop: "20px" }}>
+                                            <ItemTitle>Networks</ItemTitle>
+                                            <CompanyGrid style={{ gridAutoRows: "80px" }}>
+                                                {result.networks.map((network) => (
+                                                    <Company key={network.id} id={network.id} name={network.name} logoUrl={network.logo_path} />
+                                                ))}
+                                            </CompanyGrid>
+                                        </CompanyContainer>
+                                    )}
                                 </div>
                             </Tabs>
                         </TabContainer>

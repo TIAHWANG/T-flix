@@ -24,7 +24,7 @@ const BackDrop = styled.div`
     background-position: center center;
     background-size: cover;
     filter: blur(6px);
-    opacity: 0.6;
+    opacity: 0.7;
 `;
 
 const Content = styled.div`
@@ -140,7 +140,7 @@ export default ({ person, error, loading, imageUrl, imageClick, isClicked }) =>
             <Helmet>
                 <title>{person.name} | T-flix</title>
             </Helmet>
-            <BackDrop bgImage={`https://image.tmdb.org/t/p/original${person.profile_path}`} />
+            <BackDrop bgImage={person.profile_path ? `https://image.tmdb.org/t/p/original${person.profile_path}` : null} />
             <Content>
                 <Cover bgImage={person.profile_path ? imageUrl : require("../../Assets/noActor.png")} />
                 <Data>

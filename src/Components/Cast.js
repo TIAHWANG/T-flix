@@ -25,6 +25,7 @@ const Name = styled.div`
     font-size: 12px;
     font-weight: 600;
     opacity: 0.9;
+    margin-top: 3px;
 `;
 
 const Character = styled.div`
@@ -36,8 +37,8 @@ const Cast = ({ id, name, character, imageUrl }) => (
     <Link to={`/person/${id}`}>
         <Container>
             <Image bgUrl={imageUrl ? `https://image.tmdb.org/t/p/original${imageUrl}` : require("../Assets/noActor.png")} />
-            <Name>{name && name.length > 10 ? `${name.substring(0, 10)}..` : name}</Name>
-            <Character>{character && character.length > 13 ? `${character.substring(0, 13)}..` : character}</Character>
+            <Name>{name && name.length > 9 ? `${name.substring(0, 9)}..` : name}</Name>
+            <Character>{character && character.length > 10 ? `${character.substring(0, 10)}..` : character}</Character>
         </Container>
     </Link>
 );
@@ -45,7 +46,7 @@ const Cast = ({ id, name, character, imageUrl }) => (
 Cast.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    character: PropTypes.string.isRequired,
+    character: PropTypes.string,
     imageUrl: PropTypes.string,
 };
 

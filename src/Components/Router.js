@@ -6,6 +6,7 @@ import Search from "Routes/Search";
 import Detail from "Routes/Detail";
 import Person from "Routes/Person";
 import Collection from "Routes/Collection";
+import Seasons from "Routes/Seasons";
 import Header from "Components/Header";
 
 export default () => (
@@ -17,9 +18,10 @@ export default () => (
                 <Route path="/tv" exact component={TV} />
                 <Route path="/search" component={Search} />
                 <Route path="/movie/:id" component={Detail} />
-                <Route path="/tv/:id" component={Detail} />
+                <Route path="/tv/:id" exact component={Detail} />
                 <Route path="/person/:id" component={Person} />
                 <Route path="/collection/:id" component={Collection} />
+                <Route path="/tv/:id/season/:id" component={Seasons} />
                 <Redirect from="*" to="/" />
             </Switch>
         </>

@@ -50,6 +50,7 @@ export const tvApi = {
         }),
     tvCast: (id) => api.get(`tv/${id}/credits`),
     recommendTv: (id) => api.get(`tv/${id}/recommendations`),
+    seasons: (id, seasonNum) => api.get(`tv/${id}/season/${seasonNum}`),
 };
 
 export const personApi = {
