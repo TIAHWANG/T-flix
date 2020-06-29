@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Helmet } from "react-helmet";
 import Loader from "Components/Loader";
 import Recommend from "Components/Recommend";
 
@@ -70,6 +71,7 @@ const PosterContainer = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 280px;
     grid-gap: 10px;
     height: 86%;
     padding-right: 10px;
@@ -87,9 +89,17 @@ const PosterContainer = styled.div`
 
 const CollectionPresenter = ({ collection, error, loading }) =>
     loading ? (
-        <Loader />
+        <>
+            <Helmet>
+                <title>Loading | T-flix</title>
+            </Helmet>
+            <Loader />
+        </>
     ) : (
         <Container>
+            <Helmet>
+                <title>{collection.name} | T-flix</title>
+            </Helmet>
             <BackDrop bgImage={collection.backdrop_path ? `https://image.tmdb.org/t/p/original${collection.backdrop_path}` : null} />
             <Content>
                 <Cover

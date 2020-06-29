@@ -7,7 +7,9 @@ export default class extends React.Component {
         person: null,
         error: null,
         loading: true,
+        imageUrl: require("../../Assets/noActor.png"),
     };
+
     async componentDidMount() {
         const {
             match: {
@@ -23,6 +25,7 @@ export default class extends React.Component {
             const { data: person } = await personApi.person(parsedId);
             this.setState({
                 person,
+                imageUrl: `https://image.tmdb.org/t/p/original${person.profile_path}`,
             });
         } catch {
             this.setState({ error: "Can't find actor information" });
@@ -30,11 +33,19 @@ export default class extends React.Component {
             this.setState({ loading: false });
         }
     }
-    clickImage = (e) => {
-        console.log(e.target);
+
+    imageClick = (path) => {
+        return () => {
+            this.setState({
+                imageUrl: `https://image.tmdb.org/t/p/original${path}`,
+            });
+        };
     };
+
     render() {
-        const { person, error, loading } = this.state;
-        return <PersonPresenter person={person} error={error} loading={loading} clickImage={this.clickImage} />;
+        const { person, error, loading, isClicked, imageUrl } = this.state;
+        return (
+            <PersonPresenter person={person} error={error} loading={loading} imageUrl={imageUrl} imageClick={this.imageClick} isClicked={isClicked} />
+        );
     }
 }

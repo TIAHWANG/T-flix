@@ -7,7 +7,6 @@ import ActorImage from "Components/ActorImage";
 const Container = styled.div`
     height: calc(100vh - 50px);
     width: 100%;
-    position: relative;
     padding: 50px;
     color: white;
     display: flex;
@@ -52,8 +51,6 @@ const Data = styled.div`
     min-width: 45%;
     width: 50%;
     margin: 10px 20px;
-    position: relative;
-    overflow: hidden;
 `;
 
 const ActorName = styled.h3`
@@ -82,6 +79,7 @@ const Description = styled.div`
     line-height: 1.5;
     width: 100%;
     height: 85%;
+    padding-right: 10px;
     overflow-y: auto;
     &::-webkit-scrollbar {
         width: 4px;
@@ -130,7 +128,7 @@ const ImageScroll = styled.div`
     }
 `;
 
-export default ({ person, error, loading, clickImage }) =>
+export default ({ person, error, loading, imageUrl, imageClick, isClicked }) =>
     loading ? (
         <>
             <Helmet>
@@ -143,11 +141,9 @@ export default ({ person, error, loading, clickImage }) =>
             <Helmet>
                 <title>{person.name} | T-flix</title>
             </Helmet>
-            <BackDrop bgImage={person.profile_path ? `https://image.tmdb.org/t/p/original${person.profile_path}` : null} />
+            <BackDrop bgImage={`https://image.tmdb.org/t/p/original${person.profile_path}`} />
             <Content>
-                <Cover
-                    bgImage={person.profile_path ? `https://image.tmdb.org/t/p/original${person.profile_path}` : require("../../Assets/noActor.png")}
-                />
+                <Cover bgImage={person.profile_path ? imageUrl : require("../../Assets/noActor.png")} />
                 <Data>
                     <ActorName>{person.name ? person.name : "No Name"}</ActorName>
                     <ItemContainer>
@@ -167,7 +163,13 @@ export default ({ person, error, loading, clickImage }) =>
                             <>
                                 {person.known_for_department && <Divider>•</Divider>}
                                 <Item
-                                    style={{ color: "#000000", backgroundColor: "#F5C517", fontWeight: 600, borderRadius: "3px", padding: "0px 5px" }}
+                                    style={{
+                                        color: "#000000",
+                                        backgroundColor: "#F5C517",
+                                        fontWeight: 600,
+                                        borderRadius: "3px",
+                                        padding: "0px 5px",
+                                    }}
                                 >
                                     <Imdb target="_blank" href={`https://www.imdb.com/name/${person.imdb_id}`}>
                                         IMDb
@@ -205,13 +207,13 @@ export default ({ person, error, loading, clickImage }) =>
                                 {person.images.profiles.length <= 6 ? (
                                     <ImageContainer>
                                         {person.images.profiles.map((image, index) => (
-                                            <ActorImage onClick={clickImage} key={index} id={index} imageUrl={image.file_path} />
+                                            <ActorImage onClick={imageClick(image.file_path)} key={index} id={index} imageUrl={image.file_path} />
                                         ))}
                                     </ImageContainer>
                                 ) : (
                                     <ImageScroll>
                                         {person.images.profiles.map((image, index) => (
-                                            <ActorImage key={index} id={index} imageUrl={image.file_path} />
+                                            <ActorImage onClick={imageClick(image.file_path)} key={index} id={index} imageUrl={image.file_path} />
                                         ))}
                                     </ImageScroll>
                                 )}
