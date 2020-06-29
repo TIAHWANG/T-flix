@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import Loader from "Components/Loader";
-import ActorImage from "../../Components/ActorImage";
+import ActorImage from "Components/ActorImage";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -120,7 +120,7 @@ const ImageContainer = styled.div`
 
 const ImageScroll = styled.div`
     display: flex;
-    margin-right: 10px;
+    margin-right: 15px;
     overflow-x: scroll;
     &::-webkit-scrollbar {
         height: 4px;

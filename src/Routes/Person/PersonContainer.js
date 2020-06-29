@@ -30,9 +30,9 @@ export default class extends React.Component {
             this.setState({ loading: false });
         }
     }
+
     render() {
         const { person, error, loading } = this.state;
-        console.log(this.state);
         return <PersonPresenter person={person} error={error} loading={loading} />;
     }
 }

@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-    width: 200px;
-    height: 400px;
+    width: 100%;
+    height: 280px;
     color: white;
     margin-right: 10px;
+    font-size: 12px;
 `;
 
 const Image = styled.div`
@@ -15,7 +16,7 @@ const Image = styled.div`
     background-size: cover;
     background-position: center center;
     border-radius: 4px;
-    height: 350px;
+    height: 250px;
     transition: opacity 0.3s linear;
 `;
 
@@ -45,12 +46,7 @@ const Title = styled.span`
     margin-bottom: 2px;
 `;
 
-const Year = styled.span`
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.5);
-`;
-
-const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) => (
+const Recommend = ({ id, imageUrl, title, rating, isMovie = false }) => (
     <Link to={isMovie ? `/movie/${id}` : `/tv/${id}`}>
         <Container>
             <ImageContainer>
@@ -62,19 +58,17 @@ const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) => (
                     {rating}/10
                 </Rating>
             </ImageContainer>
-            <Title>{title.length > 20 ? ` ${title.substring(0, 20)}...` : title}</Title>
-            <Year>{year}</Year>
+            <Title>{title.length > 28 ? ` ${title.substring(0, 28)}...` : title}</Title>
         </Container>
     </Link>
 );
 
-Poster.propTypes = {
+Recommend.propTypes = {
     id: PropTypes.number.isRequired,
     imageUrl: PropTypes.string,
     title: PropTypes.string.isRequired,
     rating: PropTypes.number,
-    year: PropTypes.string,
     isMovie: PropTypes.bool,
 };
 
-export default Poster;
+export default Recommend;

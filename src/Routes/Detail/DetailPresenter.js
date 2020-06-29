@@ -7,8 +7,8 @@ import Company from "Components/Company";
 import Cast from "Components/Cast";
 import Tabs from "Components/Tabs";
 import Video from "Components/Video";
-import Poster from "Components/Poster";
 import Country from "Components/Country";
+import Recommend from "Components/Recommend";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -98,6 +98,7 @@ const Description = styled.div`
     &::-webkit-scrollbar-track {
         border: 1px solid ${(props) => props.theme.pinkColor};
     }
+    padding-right: 5px;
 `;
 
 const TabContainer = styled.div`
@@ -153,9 +154,10 @@ const NoContentMessage = styled.div`
 `;
 
 const RecommendContainer = styled.div`
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 5px;
     margin-right: 10px;
 `;
 
@@ -296,7 +298,7 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                         {recommend.results && recommend.results.length > 0 ? (
                                             <RecommendContainer>
                                                 {recommend.results.map((movie) => (
-                                                    <Poster
+                                                    <Recommend
                                                         key={movie.id}
                                                         id={movie.id}
                                                         imageUrl={movie.backdrop_path}
@@ -327,7 +329,7 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             </CompanyGrid>
                                         ) : (
                                             <NoContentMessage>
-                                                No Detail Information{" "}
+                                                No Information{" "}
                                                 <span role="img" aria-label="no videos">
                                                     😢
                                                 </span>
@@ -345,7 +347,7 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             </CompanyGrid>
                                         ) : (
                                             <NoContentMessage>
-                                                No Detail Information{" "}
+                                                No Information{" "}
                                                 <span role="img" aria-label="no videos">
                                                     😢
                                                 </span>

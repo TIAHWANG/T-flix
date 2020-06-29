@@ -7,6 +7,7 @@ const Container = styled.div`
         margin-bottom: 40px;
     }
     color: white;
+    width: 100%;
 `;
 
 const Title = styled.span`
@@ -14,17 +15,17 @@ const Title = styled.span`
     font-weight: 600;
 `;
 
-const Grid = styled.div`
+const Content = styled.div`
     margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 125px);
-    grid-gap: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const Section = ({ title, children }) => (
     <Container>
         <Title>{title}</Title>
-        <Grid>{children}</Grid>
+        <Content>{children}</Content>
     </Container>
 );
 

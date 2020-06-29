@@ -7,6 +7,7 @@ const Container = styled.div`
     &:not(:last-child) {
         margin-right: 5px;
     }
+    cursor: pointer;
 `;
 
 const Image = styled.div`
