@@ -11,6 +11,7 @@ const Container = styled.div`
 
 const Item = styled.iframe`
     width: 100%;
+    height: 100%;
     margin-bottom: 5px;
     background-color: rgba(0, 0, 0, 0.8);
 `;
@@ -21,13 +22,13 @@ const Name = styled.span`
 
 const Video = ({ id, videoUrl, name }) => (
     <Container>
-        <Item id={id} allowfullscreen frameborder="0" src={`https://www.youtube.com/embed/${videoUrl}`} />
+        <Item id={id} allow="fullscreen" frameborder="0" src={`https://www.youtube.com/embed/${videoUrl}`} />
         <Name>{name}</Name>
     </Container>
 );
 
 Video.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     videoUrl: PropTypes.string.isRequired,
     name: PropTypes.string,
 };

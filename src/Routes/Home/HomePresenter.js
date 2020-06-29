@@ -7,8 +7,35 @@ import Loader from "Components/Loader";
 import Message from "Components/Message";
 import Poster from "Components/Poster";
 
+// http://localhost:3000/movie/3293
+
 const Container = styled.div`
     padding: ${(props) => props.theme.padding};
+    width: 100%;
+`;
+
+const MainContainer = styled.div`
+    width: 100%;
+    height: 80vh;
+    margin-bottom: 20px;
+    position: relative;
+`;
+
+const MainPoster = styled.div`
+    background-image: url(${(props) => props.bgUrl});
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+`;
+
+const MainDetail = styled.div`
+    width: 100px;
+    height: 30px;
+    border: 5px solid red;
+    position: absolute;
+    bottom: 35%;
+    left: 7%;
 `;
 
 const PosterScroll = styled.div`
@@ -36,6 +63,10 @@ const HomePresenter = ({ nowPlaying, upcoming, popular, error, loading }) => (
                 <Helmet>
                     <title>Movies | T-flix</title>
                 </Helmet>
+                <MainContainer>
+                    <MainPoster bgUrl="https://image.tmdb.org/t/p/original/qDxF78TrfpWh5s1dFsu0mzgMKHZ.jpg" />
+                    <MainDetail>Go to Detail</MainDetail>
+                </MainContainer>
                 {nowPlaying && nowPlaying.length > 0 && (
                     <>
                         <Section title="Now Playing">
