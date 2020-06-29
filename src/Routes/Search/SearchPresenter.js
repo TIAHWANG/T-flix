@@ -9,18 +9,36 @@ import Poster from "Components/Poster";
 
 const Container = styled.div`
     padding: ${(props) => props.theme.padding};
-    color: white;
+`;
+
+const PosterScroll = styled.div`
+    width: 100%;
+    display: flex;
+    margin-right: 10px;
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+        height: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: ${(props) => props.theme.pinkColor};
+    }
 `;
 
 const Form = styled.form`
     margin-bottom: 50px;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const Input = styled.input`
     all: unset;
     font-size: 28px;
     width: 100%;
+    background-color: ${(props) => props.theme.black};
+    border: 1px solid ${(props) => props.theme.pinkColor};
+    padding: 10px;
 `;
 
 const SearchPresenter = ({ movieResults, tvResults, searchTerm, error, loading, handleSubmit, updateTerm }) => (
@@ -30,40 +48,51 @@ const SearchPresenter = ({ movieResults, tvResults, searchTerm, error, loading, 
         </Helmet>
         <Container>
             <Form onSubmit={handleSubmit}>
-                <Input placeholder="Search Movies or TV Shows..." value={searchTerm} onChange={updateTerm} />
+                <Input placeholder="Search Movies or TV Shows" value={searchTerm} onChange={updateTerm} />
             </Form>
             {loading ? (
                 <Loader />
             ) : (
                 <>
+                    <Helmet>
+                        <title>{searchTerm} | T-flix</title>
+                    </Helmet>
                     {movieResults && movieResults.length > 0 && (
-                        <Section title="Movie Results">
-                            {movieResults.map((movie) => (
-                                <Poster
-                                    key={movie.id}
-                                    id={movie.id}
-                                    rating={movie.vote_average}
-                                    title={movie.title}
-                                    imageUrl={movie.poster_path}
-                                    year={movie.release_date && movie.release_date.substring(0, 4)}
-                                    isMovie={true}
-                                />
-                            ))}
-                        </Section>
+                        <>
+                            <Section title="Movie Results">
+                                <PosterScroll>
+                                    {movieResults.map((movie) => (
+                                        <Poster
+                                            key={movie.id}
+                                            id={movie.id}
+                                            rating={movie.vote_average}
+                                            title={movie.title}
+                                            imageUrl={movie.poster_path}
+                                            year={movie.release_date && movie.release_date.substring(0, 4)}
+                                            isMovie={true}
+                                        />
+                                    ))}
+                                </PosterScroll>
+                            </Section>
+                        </>
                     )}
                     {tvResults && tvResults.length > 0 && (
-                        <Section title="TV Show Results">
-                            {tvResults.map((tv) => (
-                                <Poster
-                                    key={tv.id}
-                                    id={tv.id}
-                                    rating={tv.vote_average}
-                                    title={tv.name}
-                                    imageUrl={tv.poster_path}
-                                    year={tv.first_air_date && tv.first_air_date.substring(0, 4)}
-                                />
-                            ))}
-                        </Section>
+                        <>
+                            <Section title="TV Show Results">
+                                <PosterScroll>
+                                    {tvResults.map((tv) => (
+                                        <Poster
+                                            key={tv.id}
+                                            id={tv.id}
+                                            rating={tv.vote_average}
+                                            title={tv.name}
+                                            imageUrl={tv.poster_path}
+                                            year={tv.first_air_date && tv.first_air_date.substring(0, 4)}
+                                        />
+                                    ))}
+                                </PosterScroll>
+                            </Section>
+                        </>
                     )}
                 </>
             )}

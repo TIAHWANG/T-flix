@@ -118,7 +118,6 @@ const ImageContainer = styled.div`
 
 const ImageScroll = styled.div`
     display: flex;
-    margin-right: 15px;
     overflow-x: auto;
     &::-webkit-scrollbar {
         height: 4px;
@@ -204,7 +203,7 @@ export default ({ person, error, loading, imageUrl, imageClick, isClicked }) =>
                         <ItemTitle>Images</ItemTitle>
                         {person.images.profiles && person.images.profiles.length > 0 ? (
                             <>
-                                {person.images.profiles.length <= 6 ? (
+                                {person.images.profiles.length <= 5 ? (
                                     <ImageContainer>
                                         {person.images.profiles.map((image, index) => (
                                             <ActorImage onClick={imageClick(image.file_path)} key={index} id={index} imageUrl={image.file_path} />
