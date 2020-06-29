@@ -1,10 +1,10 @@
 import React from "react";
-import PersonPresenter from "./PersonPresenter";
-import { personApi } from "../../api";
+import CollectionPresenter from "./CollectionPresenter";
+import { moviesApi } from "../../api";
 
 export default class extends React.Component {
     state = {
-        person: null,
+        collection: null,
         error: null,
         loading: true,
     };
@@ -20,21 +20,19 @@ export default class extends React.Component {
             return push("/");
         }
         try {
-            const { data: person } = await personApi.person(parsedId);
+            const { data: collection } = await moviesApi.movieCollection(parsedId);
             this.setState({
-                person,
+                collection,
             });
         } catch {
-            this.setState({ error: "Can't find actor information" });
+            this.setState({ error: "Can't find anything" });
         } finally {
             this.setState({ loading: false });
         }
     }
-    clickImage = (e) => {
-        console.log(e.target);
-    };
     render() {
-        const { person, error, loading } = this.state;
-        return <PersonPresenter person={person} error={error} loading={loading} clickImage={this.clickImage} />;
+        const { collection, error, loading } = this.state;
+        console.log(collection);
+        return <CollectionPresenter collection={collection} error={error} loading={loading} clickImage={this.clickImage} />;
     }
 }

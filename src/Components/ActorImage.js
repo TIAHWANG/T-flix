@@ -20,9 +20,9 @@ const Image = styled.div`
     border-radius: 5px;
 `;
 
-const ActorImage = ({ id, imageUrl }) => (
+const ActorImage = ({ id, imageUrl, onClick }) => (
     <Container>
-        <Image bgUrl={`https://image.tmdb.org/t/p/original${imageUrl}`} />
+        <Image onClick={onClick} bgUrl={`https://image.tmdb.org/t/p/original${imageUrl}`} />
     </Container>
 );
 

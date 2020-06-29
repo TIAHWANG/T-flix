@@ -9,6 +9,7 @@ import Tabs from "Components/Tabs";
 import Video from "Components/Video";
 import Country from "Components/Country";
 import Recommend from "Components/Recommend";
+import CollectionPoster from "Components/CollectionPoster";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -141,6 +142,10 @@ const CastContainer = styled.div`
     display: flex;
 `;
 
+const CollectionContainer = styled.div`
+    width: 100%;
+`;
+
 const VideoContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -264,6 +269,18 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                                         />
                                                     ))}
                                                 </CastScroll>
+                                            )}
+                                            {result.belongs_to_collection && (
+                                                <>
+                                                    <ItemTitle>Collection</ItemTitle>
+                                                    <CollectionContainer>
+                                                        <CollectionPoster
+                                                            id={result.belongs_to_collection.id}
+                                                            imageUrl={result.belongs_to_collection.poster_path}
+                                                            title={result.belongs_to_collection.name}
+                                                        />
+                                                    </CollectionContainer>
+                                                </>
                                             )}
                                         </>
                                     ) : (

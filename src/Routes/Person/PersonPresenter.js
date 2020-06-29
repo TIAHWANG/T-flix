@@ -121,7 +121,7 @@ const ImageContainer = styled.div`
 const ImageScroll = styled.div`
     display: flex;
     margin-right: 15px;
-    overflow-x: scroll;
+    overflow-x: auto;
     &::-webkit-scrollbar {
         height: 4px;
     }
@@ -130,7 +130,7 @@ const ImageScroll = styled.div`
     }
 `;
 
-export default ({ person, error, loading }) =>
+export default ({ person, error, loading, clickImage }) =>
     loading ? (
         <>
             <Helmet>
@@ -205,7 +205,7 @@ export default ({ person, error, loading }) =>
                                 {person.images.profiles.length <= 6 ? (
                                     <ImageContainer>
                                         {person.images.profiles.map((image, index) => (
-                                            <ActorImage key={index} id={index} imageUrl={image.file_path} />
+                                            <ActorImage onClick={clickImage} key={index} id={index} imageUrl={image.file_path} />
                                         ))}
                                     </ImageContainer>
                                 ) : (
