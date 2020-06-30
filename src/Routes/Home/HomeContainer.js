@@ -11,7 +11,7 @@ export default class extends React.Component {
         loading: true,
     };
 
-    async componentDidMount() {
+    getMovieData = async () => {
         try {
             const {
                 data: { results: nowPlaying },
@@ -36,6 +36,17 @@ export default class extends React.Component {
                 loading: false,
             });
         }
+    };
+
+    goToDetail = () => {
+        const {
+            history: { push },
+        } = this.props;
+        return push("http://localhost:3000/movie/3293");
+    };
+
+    componentDidMount() {
+        this.getMovieData();
     }
 
     render() {
