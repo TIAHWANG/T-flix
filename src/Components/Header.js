@@ -15,7 +15,7 @@ const Header = styled.header`
     left: 0;
     display: flex;
     align-items: center;
-    padding: ${(props) => props.theme.padding};
+    padding: 20px;
     z-index: 10;
     /* box-shadow: 0px 1px 5px 2px rgba(251, 187, 179, 0.8); */
 `;
@@ -23,7 +23,6 @@ const Header = styled.header`
 const List = styled.ul`
     display: flex;
 `;
-
 const ListItem = styled.li`
     width: 80px;
     height: 50px;

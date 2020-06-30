@@ -15,7 +15,7 @@ const Container = styled.div`
 const MainContainer = styled.div`
     width: 100%;
     height: 80vh;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     position: relative;
 `;
 
@@ -112,7 +112,7 @@ const TVPresenter = ({ topRated, popular, airingToday, error, loading }) => (
                 </MainContainer>
                 {topRated && topRated.length > 0 && (
                     <>
-                        <Section title="Top Rated Shows">
+                        <Section title="Top Rated Shows" name="top" isMovie={false}>
                             <PosterScroll>
                                 {topRated.map((tv) => (
                                     <Poster
@@ -130,7 +130,7 @@ const TVPresenter = ({ topRated, popular, airingToday, error, loading }) => (
                 )}
                 {airingToday && airingToday.length > 0 && (
                     <>
-                        <Section title="Airing Today">
+                        <Section title="Airing Today" name="airing" isMovie={false}>
                             <PosterScroll>
                                 {airingToday.map((tv) => (
                                     <Poster
@@ -148,7 +148,7 @@ const TVPresenter = ({ topRated, popular, airingToday, error, loading }) => (
                 )}
                 {popular && popular.length > 0 && (
                     <>
-                        <Section title="Popular Shows">
+                        <Section title="Popular Shows" name="popular" isMovie={false}>
                             <PosterScroll>
                                 {popular.map((tv) => (
                                     <Poster

@@ -38,13 +38,6 @@ export default class extends React.Component {
         }
     };
 
-    goToDetail = () => {
-        const {
-            history: { push },
-        } = this.props;
-        return push("http://localhost:3000/movie/3293");
-    };
-
     componentDidMount() {
         this.getMovieData();
     }

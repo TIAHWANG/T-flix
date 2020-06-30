@@ -2,13 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 import Section from "Components/Section";
 import Loader from "Components/Loader";
 import Message from "Components/Message";
 import Poster from "Components/Poster";
-import { Link } from "react-router-dom";
-
-// http://localhost:3000/movie/3293
 
 const Container = styled.div`
     padding: ${(props) => props.theme.padding};
@@ -18,7 +16,7 @@ const Container = styled.div`
 const MainContainer = styled.div`
     width: 100%;
     height: 80vh;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     position: relative;
 `;
 
@@ -106,7 +104,7 @@ const HomePresenter = ({ nowPlaying, upcoming, popular, error, loading }) => (
                 </MainContainer>
                 {nowPlaying && nowPlaying.length > 0 && (
                     <>
-                        <Section title="Now Playing">
+                        <Section title="Now Playing" name="now" isMovie>
                             <PosterScroll>
                                 {nowPlaying.map((movie) => (
                                     <Poster
@@ -125,7 +123,7 @@ const HomePresenter = ({ nowPlaying, upcoming, popular, error, loading }) => (
                 )}
                 {upcoming && upcoming.length > 0 && (
                     <>
-                        <Section title="Upcoming Movies">
+                        <Section title="Upcoming Movies" name="upcoming">
                             <PosterScroll>
                                 {upcoming.map((movie) => (
                                     <Poster
@@ -144,7 +142,7 @@ const HomePresenter = ({ nowPlaying, upcoming, popular, error, loading }) => (
                 )}
                 {popular && popular.length > 0 && (
                     <>
-                        <Section title="Popular Movies">
+                        <Section title="Popular Movies" name="popular">
                             <PosterScroll>
                                 {popular.map((movie) => (
                                     <Poster

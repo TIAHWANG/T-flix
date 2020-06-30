@@ -4,5 +4,5 @@ export default {
     lightBlueColor: "#b6c4d9",
     darkBlueColor: "#6a97cc",
     black: "#141414",
-    padding: "20px",
+    padding: "40px",
 };
