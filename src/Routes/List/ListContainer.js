@@ -12,15 +12,44 @@ export default class extends React.Component {
         popularTvList: [],
         pageNumber: 1,
         hasMore: true,
+        isVisible: false,
     };
+
+    scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    }
 
     componentDidMount() {
         this.fetchMovieData();
+        this.fetchTvData();
+        window.addEventListener("scroll", this.handleScroll);
     }
 
     componentDidUpdate() {
-        window.scrollTo(0, 0);
+        const { pageNumber } = this.state;
+        if (pageNumber === 1 || pageNumber === 2) {
+            window.scrollTo(0, 0);
+        }
     }
+
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
+    }
+
+    handleScroll = () => {
+        if (window.pageYOffset > 500 && !this.state.isVisible) {
+            this.setState({
+                isVisible: true,
+            });
+        } else if (window.pageYOffset === 0) {
+            this.setState({
+                isVisible: false,
+            });
+        }
+    };
 
     fetchMovieData = async () => {
         const {
@@ -85,7 +114,7 @@ export default class extends React.Component {
     };
 
     render() {
-        const { nowPlayingList, upcomingList, popularMovieList, airingList, popularTvList, topRatedList, hasMore } = this.state;
+        const { nowPlayingList, upcomingList, popularMovieList, airingList, popularTvList, topRatedList, hasMore, isVisible } = this.state;
         return (
             <ListPresenter
                 nowPlayingList={nowPlayingList}
@@ -95,8 +124,10 @@ export default class extends React.Component {
                 airingList={airingList}
                 popularTvList={popularTvList}
                 hasMore={hasMore}
+                isVisible={isVisible}
                 fetchMovieData={this.fetchMovieData}
                 fetchTvData={this.fetchTvData}
+                scrollToTop={this.scrollToTop}
             />
         );
     }
