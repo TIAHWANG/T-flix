@@ -19,6 +19,20 @@ const Header = styled.header`
     z-index: 10;
     /* box-shadow: 0px 1px 5px 2px rgba(251, 187, 179, 0.8); */
 `;
+const LogoContainer = styled.div`
+    width: 100px;
+    height: 50px;
+    padding-top: 2px;
+`;
+
+const Logo = styled.div`
+    background-image: url(${(props) => props.bgUrl});
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 50px;
+`;
 
 const List = styled.ul`
     display: flex;
@@ -41,6 +55,9 @@ const SLink = styled(Link)`
 
 export default withRouter(({ location: { pathname } }) => (
     <Header>
+        <LogoContainer>
+            <Logo bgUrl={require("../Assets/mainLogo.png")} />
+        </LogoContainer>
         <List>
             <ListItem current={pathname === "/"}>
                 <SLink to="/">Movies</SLink>
