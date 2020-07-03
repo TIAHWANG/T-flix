@@ -9,6 +9,7 @@ export default class extends React.Component {
         popular: null,
         error: null,
         loading: true,
+        fade: false,
     };
 
     getMovieData = async () => {
@@ -26,6 +27,7 @@ export default class extends React.Component {
                 nowPlaying,
                 upcoming,
                 popular,
+                fade: true,
             });
         } catch {
             this.setState({
@@ -38,6 +40,9 @@ export default class extends React.Component {
         }
     };
 
+    handleFade = () => {
+        this.setState({ fade: true });
+    };
     componentDidMount() {
         this.getMovieData();
     }

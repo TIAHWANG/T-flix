@@ -9,13 +9,14 @@ import Message from "Components/Message";
 import Poster from "Components/Poster";
 
 const Container = styled.div`
-    padding: ${(props) => props.theme.padding};
+    padding: 0px ${(props) => props.theme.padding};
     width: 100%;
 `;
 
 const MainContainer = styled.div`
     width: 100%;
     height: 80vh;
+    padding-top: 20px;
     margin-bottom: 40px;
     position: relative;
 `;
@@ -28,20 +29,24 @@ const MainPoster = styled.div`
     height: 100%;
 `;
 
-const Arrow = styled.svg`
+const MainLogo = styled.div`
+    background-image: url(${(props) => props.bgUrl});
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 800px;
+    height: 250px;
     position: absolute;
-    bottom: 16px;
-    right: 15px;
-    fill: ${(props) => props.theme.pinkColor};
+    bottom: 0;
+    left: 0;
 `;
 
 const MainDetail = styled.div`
     width: 165px;
     height: 50px;
     position: absolute;
-    bottom: 33%;
-    left: 7%;
-    border-radius: 5px;
+    bottom: 21%;
+    left: 15px;
+    border-radius: 4px;
     background-color: ${(props) => props.theme.black};
     border: 1px solid ${(props) => props.theme.black};
     color: ${(props) => props.theme.pinkColor};
@@ -50,13 +55,10 @@ const MainDetail = styled.div`
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
+    transition: border-radius 0.3s ease-in-out, border 0.3s ease-in-out;
     &:hover {
-        background-color: ${(props) => props.theme.pinkColor};
+        border-radius: 30px;
         border: 1px solid ${(props) => props.theme.pinkColor};
-        color: ${(props) => props.theme.black};
-        ${Arrow} {
-            fill: ${(props) => props.theme.black};
-        }
     }
 `;
 
@@ -64,6 +66,13 @@ const MainButton = styled.div`
     display: flex;
     align-items: center;
     padding-left: 15px;
+`;
+
+const Arrow = styled.svg`
+    position: absolute;
+    bottom: 16px;
+    right: 15px;
+    fill: ${(props) => props.theme.pinkColor};
 `;
 
 const PosterScroll = styled.div`
@@ -79,7 +88,7 @@ const PosterScroll = styled.div`
     }
 `;
 
-const HomePresenter = ({ nowPlaying, upcoming, popular, error, loading }) => (
+const HomePresenter = ({ nowPlaying, upcoming, popular, error, loading, isVisible }) => (
     <>
         <Helmet>
             <title>Movies | T-flix</title>
@@ -92,8 +101,9 @@ const HomePresenter = ({ nowPlaying, upcoming, popular, error, loading }) => (
                     <title>Movies | T-flix</title>
                 </Helmet>
                 <MainContainer>
-                    <MainPoster bgUrl="https://image.tmdb.org/t/p/original/qDxF78TrfpWh5s1dFsu0mzgMKHZ.jpg" />
-                    <Link to="/movie/3293">
+                    <MainPoster bgUrl="https://image.tmdb.org/t/p/original/jHNdwbUGd5gFQzxKGEXXhjhUVnC.jpg" />
+                    <MainLogo bgUrl={require("../../Assets/gilmoreLogo.jpg")} />
+                    <Link to="/movie/9614">
                         <MainDetail>
                             <MainButton>Go To Detail</MainButton>
                             <Arrow xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="#141414">

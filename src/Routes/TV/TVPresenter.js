@@ -9,12 +9,13 @@ import Poster from "Components/Poster";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-    padding: ${(props) => props.theme.padding};
+    padding: 0px ${(props) => props.theme.padding};
 `;
 
 const MainContainer = styled.div`
     width: 100%;
     height: 80vh;
+    padding-top: 20px;
     margin-bottom: 40px;
     position: relative;
 `;
@@ -38,20 +39,13 @@ const MainLogo = styled.div`
     left: 0;
 `;
 
-const Arrow = styled.svg`
-    position: absolute;
-    bottom: 16px;
-    right: 15px;
-    fill: ${(props) => props.theme.pinkColor};
-`;
-
 const MainDetail = styled.div`
     width: 165px;
     height: 50px;
     position: absolute;
     bottom: 32%;
     left: 15px;
-    border-radius: 5px;
+    border-radius: 4px;
     background-color: ${(props) => props.theme.black};
     border: 1px solid ${(props) => props.theme.black};
     color: ${(props) => props.theme.pinkColor};
@@ -60,13 +54,10 @@ const MainDetail = styled.div`
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
+    transition: border-radius 0.3s ease-in-out, border 0.3s ease-in-out;
     &:hover {
-        background-color: ${(props) => props.theme.pinkColor};
+        border-radius: 30px;
         border: 1px solid ${(props) => props.theme.pinkColor};
-        color: ${(props) => props.theme.black};
-        ${Arrow} {
-            fill: ${(props) => props.theme.black};
-        }
     }
 `;
 
@@ -74,6 +65,13 @@ const MainButton = styled.div`
     display: flex;
     align-items: center;
     padding-left: 15px;
+`;
+
+const Arrow = styled.svg`
+    position: absolute;
+    bottom: 16px;
+    right: 15px;
+    fill: ${(props) => props.theme.pinkColor};
 `;
 
 const PosterScroll = styled.div`
