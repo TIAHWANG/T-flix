@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.js": "/tflix/static/js/main.08c8f76b.chunk.js",
+    "main.js.map": "/tflix/static/js/main.08c8f76b.chunk.js.map",
+    "runtime-main.js": "/tflix/static/js/runtime-main.cc8450ab.js",
+    "runtime-main.js.map": "/tflix/static/js/runtime-main.cc8450ab.js.map",
+    "static/js/2.6ae5264d.chunk.js": "/tflix/static/js/2.6ae5264d.chunk.js",
+    "static/js/2.6ae5264d.chunk.js.map": "/tflix/static/js/2.6ae5264d.chunk.js.map",
+    "index.html": "/tflix/index.html",
+    "precache-manifest.bec3bd368fc053840a09cfc05ff346e9.js": "/tflix/precache-manifest.bec3bd368fc053840a09cfc05ff346e9.js",
+    "service-worker.js": "/tflix/service-worker.js",
+    "static/js/2.6ae5264d.chunk.js.LICENSE.txt": "/tflix/static/js/2.6ae5264d.chunk.js.LICENSE.txt",
+    "static/media/blackListLogo.png": "/tflix/static/media/blackListLogo.be5bb3e1.png",
+    "static/media/gilmoreLogo.jpg": "/tflix/static/media/gilmoreLogo.b8c3a64f.jpg",
+    "static/media/mainLogo.png": "/tflix/static/media/mainLogo.98153aa4.png",
+    "static/media/noLogo.png": "/tflix/static/media/noLogo.1f6d1628.png",
+    "static/media/noPosterSmall.png": "/tflix/static/media/noPosterSmall.87a0eb6a.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cc8450ab.js",
+    "static/js/2.6ae5264d.chunk.js",
+    "static/js/main.08c8f76b.chunk.js"
+  ]
+}
