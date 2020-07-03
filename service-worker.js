@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/T-flix/precache-manifest.ec3b228337f10724758ffa4b1995e949.js"
+  "/T-flix/precache-manifest.02fca4e091d7fbdc3ccd52138e090b39.js"
 );
 
 self.addEventListener('message', (event) => {
