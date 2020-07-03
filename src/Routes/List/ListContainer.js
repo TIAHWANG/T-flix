@@ -40,7 +40,7 @@ export default class extends React.Component {
     }
 
     handleScroll = () => {
-        if (window.pageYOffset > 500 && !this.state.isVisible) {
+        if (window.pageYOffset > 400 && !this.state.isVisible) {
             this.setState({
                 isVisible: true,
             });

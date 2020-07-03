@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { withRouter } from "react-router-dom";
@@ -25,9 +25,31 @@ const PosterContainer = styled.div`
     justify-content: space-around;
 `;
 
+const fadeIn = keyframes`
+   0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+   0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
 const ArrowContainer = styled.div`
     position: relative;
     cursor: pointer;
+    visibility: ${(props) => (props.out ? "visible" : "hidden")};
+    animation: ${(props) => (props.out ? fadeIn : fadeOut)} 1s ease-in-out;
+    transition: visibility 1s ease-in-out;
+    z-index: 9999;
 `;
 
 const Arrow = styled.svg`
@@ -35,7 +57,6 @@ const Arrow = styled.svg`
     position: fixed;
     bottom: 20px;
     left: 50%;
-    z-index: 9999;
     transition: transform 0.3s ease-in-out;
     &:hover {
         transform: scale(1.2);
@@ -60,13 +81,11 @@ const ListPresenter = withRouter(
         pathname.includes("movie") ? (
             <>
                 <Container current={pathname.includes("now")}>
-                    {isVisible && (
-                        <ArrowContainer onClick={() => scrollToTop()}>
-                            <Arrow xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24">
-                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 7.58l5.995 5.988-1.416 1.414-4.579-4.574-4.59 4.574-1.416-1.414 6.006-5.988z" />
-                            </Arrow>
-                        </ArrowContainer>
-                    )}
+                    <ArrowContainer onClick={() => scrollToTop()} out={isVisible}>
+                        <Arrow xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 7.58l5.995 5.988-1.416 1.414-4.579-4.574-4.59 4.574-1.416-1.414 6.006-5.988z" />
+                        </Arrow>
+                    </ArrowContainer>
                     {nowPlayingList && (
                         <>
                             <InfiniteScroll dataLength={nowPlayingList.length} next={fetchMovieData} hasMore={hasMore} loader={<Loader />}>
