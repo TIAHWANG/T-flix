@@ -82,7 +82,7 @@ const Description = styled.div`
     padding-right: 10px;
     overflow-y: auto;
     &::-webkit-scrollbar {
-        width: 4px;
+        width: 8px;
     }
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};
@@ -120,7 +120,10 @@ const ImageScroll = styled.div`
     display: flex;
     overflow-x: auto;
     &::-webkit-scrollbar {
-        height: 4px;
+        height: 8px;
+    }
+    &::-webkit-scrollbar-track {
+        border: 1px solid ${(props) => props.theme.pinkColor};
     }
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};

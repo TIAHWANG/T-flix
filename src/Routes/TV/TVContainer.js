@@ -9,6 +9,7 @@ export default class extends React.Component {
         airingToday: null,
         error: null,
         loading: true,
+        isVisible: true,
     };
 
     async componentDidMount() {
@@ -39,7 +40,7 @@ export default class extends React.Component {
     }
 
     render() {
-        const { topRated, popular, airingToday, error, loading } = this.state;
-        return <TVPresenter topRated={topRated} popular={popular} airingToday={airingToday} error={error} loading={loading} />;
+        const { topRated, popular, airingToday, error, loading, isVisible } = this.state;
+        return <TVPresenter topRated={topRated} popular={popular} airingToday={airingToday} error={error} loading={loading} isVisible={isVisible} />;
     }
 }

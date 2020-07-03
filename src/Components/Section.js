@@ -22,6 +22,10 @@ const Title = styled.div`
     font-weight: 600;
 `;
 
+const ArrowContainer = styled(Link)`
+    display: ${(props) => (props.show ? "inline-block" : "none")};
+`;
+
 const Arrow = styled.svg`
     fill: ${(props) => props.theme.pinkColor};
     margin-left: 10px;
@@ -37,16 +41,16 @@ const Content = styled.div`
     align-items: center;
 `;
 
-const Section = ({ title, name, children, isMovie = true }) => (
+const Section = ({ title, name, children, isMovie = true, isVisible }) => (
     <Container>
         <TitleContainer>
             <Title>
                 {title}
-                <Link to={isMovie ? `/movie/list/${name}` : `/tv/list/${name}`}>
+                <ArrowContainer show={isVisible} to={isMovie ? `/movie/list/${name}` : `/tv/list/${name}`}>
                     <Arrow xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                         <path d="M0 3.795l2.995-2.98 11.132 11.185-11.132 11.186-2.995-2.981 8.167-8.205-8.167-8.205zm18.04 8.205l-8.167 8.205 2.995 2.98 11.132-11.185-11.132-11.186-2.995 2.98 8.167 8.206z" />
                     </Arrow>
-                </Link>
+                </ArrowContainer>
             </Title>
         </TitleContainer>
         <Content>{children}</Content>

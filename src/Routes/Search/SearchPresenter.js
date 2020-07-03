@@ -17,7 +17,10 @@ const PosterScroll = styled.div`
     margin-right: 10px;
     overflow-x: scroll;
     &::-webkit-scrollbar {
-        height: 4px;
+        height: 10px;
+    }
+    &::-webkit-scrollbar-track {
+        border: 1px solid ${(props) => props.theme.pinkColor};
     }
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};
@@ -41,7 +44,7 @@ const Input = styled.input`
     padding: 10px;
 `;
 
-const SearchPresenter = ({ movieResults, tvResults, searchTerm, error, loading, handleSubmit, updateTerm }) => (
+const SearchPresenter = ({ movieResults, tvResults, searchTerm, error, loading, handleSubmit, updateTerm, isVisible }) => (
     <>
         <Helmet>
             <title>Search | T-flix</title>
@@ -59,7 +62,7 @@ const SearchPresenter = ({ movieResults, tvResults, searchTerm, error, loading, 
                     </Helmet>
                     {movieResults && movieResults.length > 0 && (
                         <>
-                            <Section title="Movie Results">
+                            <Section title="Movie Results" isVisible={false}>
                                 <PosterScroll>
                                     {movieResults.map((movie) => (
                                         <Poster
@@ -78,7 +81,7 @@ const SearchPresenter = ({ movieResults, tvResults, searchTerm, error, loading, 
                     )}
                     {tvResults && tvResults.length > 0 && (
                         <>
-                            <Section title="TV Show Results">
+                            <Section title="TV Show Results" isVisible={false}>
                                 <PosterScroll>
                                     {tvResults.map((tv) => (
                                         <Poster

@@ -8,6 +8,7 @@ export default class extends React.Component {
         showName: null,
         error: null,
         loading: true,
+        isVisible: false,
     };
     async componentDidMount() {
         const {
@@ -36,8 +37,8 @@ export default class extends React.Component {
         }
     }
     render() {
-        const { season, showName, error, loading } = this.state;
+        const { season, showName, error, loading, isVisible } = this.state;
         console.log(season);
-        return <SeasonPresenter season={season} showName={showName} error={error} loading={loading} />;
+        return <SeasonPresenter season={season} showName={showName} error={error} loading={loading} isVisible={isVisible} />;
     }
 }

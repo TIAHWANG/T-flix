@@ -9,7 +9,7 @@ import Message from "Components/Message";
 import Poster from "Components/Poster";
 
 const Container = styled.div`
-    padding: 0px ${(props) => props.theme.padding};
+    padding: 0px ${(props) => props.theme.padding} ${(props) => props.theme.padding};
     width: 100%;
 `;
 
@@ -58,7 +58,6 @@ const MainDetail = styled.div`
     transition: border-radius 0.3s ease-in-out, border 0.3s ease-in-out;
     &:hover {
         border-radius: 30px;
-        border: 1px solid ${(props) => props.theme.pinkColor};
     }
 `;
 
@@ -81,7 +80,10 @@ const PosterScroll = styled.div`
     margin-right: 10px;
     overflow-x: scroll;
     &::-webkit-scrollbar {
-        height: 4px;
+        height: 10px;
+    }
+    &::-webkit-scrollbar-track {
+        border: 1px solid ${(props) => props.theme.pinkColor};
     }
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};
@@ -114,7 +116,7 @@ const HomePresenter = ({ nowPlaying, upcoming, popular, error, loading, isVisibl
                 </MainContainer>
                 {nowPlaying && nowPlaying.length > 0 && (
                     <>
-                        <Section title="Now Playing" name="now" isMovie>
+                        <Section title="Now Playing" name="now" isMovie isVisible>
                             <PosterScroll>
                                 {nowPlaying.map((movie) => (
                                     <Poster
@@ -133,7 +135,7 @@ const HomePresenter = ({ nowPlaying, upcoming, popular, error, loading, isVisibl
                 )}
                 {upcoming && upcoming.length > 0 && (
                     <>
-                        <Section title="Upcoming Movies" name="upcoming">
+                        <Section title="Upcoming Movies" name="upcoming" isMovie isVisible>
                             <PosterScroll>
                                 {upcoming.map((movie) => (
                                     <Poster
@@ -152,7 +154,7 @@ const HomePresenter = ({ nowPlaying, upcoming, popular, error, loading, isVisibl
                 )}
                 {popular && popular.length > 0 && (
                     <>
-                        <Section title="Popular Movies" name="popular">
+                        <Section title="Popular Movies" name="popular" isMovie isVisible>
                             <PosterScroll>
                                 {popular.map((movie) => (
                                     <Poster

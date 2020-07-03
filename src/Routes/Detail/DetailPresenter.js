@@ -91,7 +91,7 @@ const Description = styled.div`
     height: 83%;
     overflow-y: auto;
     &::-webkit-scrollbar {
-        width: 4px;
+        width: 8px;
     }
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};
@@ -130,7 +130,10 @@ const CastScroll = styled.div`
     margin-right: 10px;
     overflow-x: scroll;
     &::-webkit-scrollbar {
-        height: 4px;
+        height: 8px;
+    }
+    &::-webkit-scrollbar-track {
+        border: 1px solid ${(props) => props.theme.pinkColor};
     }
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};
@@ -139,6 +142,25 @@ const CastScroll = styled.div`
 
 const CastContainer = styled.div`
     width: 100%;
+    margin-right: 10px;
+    display: flex;
+    @media (max-width: 1400px) {
+        overflow-x: scroll;
+        &::-webkit-scrollbar {
+            height: 8px;
+        }
+        &::-webkit-scrollbar-track {
+            border: 1px solid ${(props) => props.theme.pinkColor};
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: ${(props) => props.theme.pinkColor};
+        }
+    }
+`;
+
+const CreatorContainer = styled.div`
+    width: 100%;
+    margin-right: 10px;
     display: flex;
 `;
 
@@ -155,7 +177,10 @@ const SeasonScroll = styled.div`
     display: flex;
     overflow-x: auto;
     &::-webkit-scrollbar {
-        height: 4px;
+        height: 8px;
+    }
+    &::-webkit-scrollbar-track {
+        border: 1px solid ${(props) => props.theme.pinkColor};
     }
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};
@@ -260,7 +285,7 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                     )}
                                     <ItemTitle>Starring</ItemTitle>
                                     {staff && staff.cast.length > 0 ? (
-                                        staff.cast.length <= 3 ? (
+                                        staff.cast.length <= 6 ? (
                                             <CastContainer>
                                                 {staff.cast.map((actor) => (
                                                     <Cast
@@ -305,27 +330,16 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             </CollectionContainer>
                                         </>
                                     )}
-                                    {result.created_by && result.created_by.length > 0 ? (
-                                        result.created_by.length <= 6 ? (
-                                            <>
-                                                <ItemTitle>Creator</ItemTitle>
-                                                <CastContainer>
-                                                    {result.created_by.map((creator) => (
-                                                        <Cast key={creator.id} id={creator.id} name={creator.name} imageUrl={creator.profile_path} />
-                                                    ))}
-                                                </CastContainer>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <ItemTitle>Creator</ItemTitle>
-                                                <CastScroll>
-                                                    {result.created_by.map((creator) => (
-                                                        <Cast key={creator.id} id={creator.id} name={creator.name} imageUrl={creator.profile_path} />
-                                                    ))}
-                                                </CastScroll>
-                                            </>
-                                        )
-                                    ) : null}
+                                    {result.created_by && result.created_by.length > 0 && (
+                                        <>
+                                            <ItemTitle>Creator</ItemTitle>
+                                            <CreatorContainer>
+                                                {result.created_by.map((creator) => (
+                                                    <Cast key={creator.id} id={creator.id} name={creator.name} imageUrl={creator.profile_path} />
+                                                ))}
+                                            </CreatorContainer>
+                                        </>
+                                    )}
                                     {result.seasons && result.seasons.length > 0 ? (
                                         result.seasons.length <= 3 ? (
                                             <>

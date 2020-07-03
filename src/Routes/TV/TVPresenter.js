@@ -9,7 +9,7 @@ import Poster from "Components/Poster";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-    padding: 0px ${(props) => props.theme.padding};
+    padding: 0px ${(props) => props.theme.padding} ${(props) => props.theme.padding};
 `;
 
 const MainContainer = styled.div`
@@ -57,7 +57,6 @@ const MainDetail = styled.div`
     transition: border-radius 0.3s ease-in-out, border 0.3s ease-in-out;
     &:hover {
         border-radius: 30px;
-        border: 1px solid ${(props) => props.theme.pinkColor};
     }
 `;
 
@@ -80,14 +79,17 @@ const PosterScroll = styled.div`
     margin-right: 10px;
     overflow-x: scroll;
     &::-webkit-scrollbar {
-        height: 4px;
+        height: 10px;
+    }
+    &::-webkit-scrollbar-track {
+        border: 1px solid ${(props) => props.theme.pinkColor};
     }
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};
     }
 `;
 
-const TVPresenter = ({ topRated, popular, airingToday, error, loading }) => (
+const TVPresenter = ({ topRated, popular, airingToday, error, loading, isVisible }) => (
     <>
         <Helmet>
             <title>TV | T-flix</title>
@@ -110,7 +112,7 @@ const TVPresenter = ({ topRated, popular, airingToday, error, loading }) => (
                 </MainContainer>
                 {topRated && topRated.length > 0 && (
                     <>
-                        <Section title="Top Rated Shows" name="top" isMovie={false}>
+                        <Section title="Top Rated Shows" name="top" isMovie={false} isVisible>
                             <PosterScroll>
                                 {topRated.map((tv) => (
                                     <Poster
@@ -128,7 +130,7 @@ const TVPresenter = ({ topRated, popular, airingToday, error, loading }) => (
                 )}
                 {airingToday && airingToday.length > 0 && (
                     <>
-                        <Section title="Airing Today" name="airing" isMovie={false}>
+                        <Section title="Airing Today" name="airing" isMovie={false} isVisible>
                             <PosterScroll>
                                 {airingToday.map((tv) => (
                                     <Poster
@@ -146,7 +148,7 @@ const TVPresenter = ({ topRated, popular, airingToday, error, loading }) => (
                 )}
                 {popular && popular.length > 0 && (
                     <>
-                        <Section title="Popular Shows" name="popular" isMovie={false}>
+                        <Section title="Popular Shows" name="popular" isMovie={false} isVisible>
                             <PosterScroll>
                                 {popular.map((tv) => (
                                     <Poster

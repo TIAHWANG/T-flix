@@ -10,6 +10,7 @@ export default class extends React.Component {
         error: null,
         loading: true,
         fade: false,
+        isVisible: true,
     };
 
     getMovieData = async () => {
@@ -48,7 +49,7 @@ export default class extends React.Component {
     }
 
     render() {
-        const { nowPlaying, upcoming, popular, error, loading } = this.state;
-        return <HomePresenter nowPlaying={nowPlaying} upcoming={upcoming} popular={popular} error={error} loading={loading} />;
+        const { nowPlaying, upcoming, popular, error, loading, isVisible } = this.state;
+        return <HomePresenter nowPlaying={nowPlaying} upcoming={upcoming} popular={popular} error={error} loading={loading} isVisible={isVisible} />;
     }
 }
