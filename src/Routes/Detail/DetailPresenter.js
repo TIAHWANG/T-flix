@@ -54,6 +54,9 @@ const Cover = styled.div`
     background-position: center center;
     background-size: cover;
     border-radius: 5px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_PC}) {
+        width: 40%;
+    }
 `;
 
 const Data = styled.div`
@@ -61,6 +64,10 @@ const Data = styled.div`
     width: 50%;
     margin: 10px 20px 0px;
     position: relative;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_PC}) {
+        width: 60%;
+        min-width: 55%;
+    }
 `;
 
 const MovieTitle = styled.h3`
@@ -192,6 +199,10 @@ const VideoContainer = styled.div`
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px;
     margin-right: 10px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_PC}) {
+        grid-template-columns: repeat(1, 1fr);
+        grid-auto-rows: 300px;
+    }
 `;
 
 const NoContentMessage = styled.div`
@@ -209,6 +220,7 @@ const RecommendContainer = styled.div`
 
 const CompanyContainer = styled.div`
     width: 100%;
+    margin-top: 20px;
 `;
 
 const CompanyGrid = styled.div`
@@ -436,7 +448,7 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                         )}
                                     </CompanyContainer>
                                     {result.production_countries && result.production_countries.length > 0 && (
-                                        <CompanyContainer style={{ marginTop: "20px" }}>
+                                        <CompanyContainer>
                                             <ItemTitle>Production Countries</ItemTitle>
                                             <CompanyGrid style={{ gridAutoRows: "40px" }}>
                                                 {result.production_countries.map((country) => (
@@ -446,7 +458,7 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                         </CompanyContainer>
                                     )}
                                     {result.networks && result.networks.length > 0 && (
-                                        <CompanyContainer style={{ marginTop: "20px" }}>
+                                        <CompanyContainer>
                                             <ItemTitle>Networks</ItemTitle>
                                             <CompanyGrid style={{ gridAutoRows: "80px" }}>
                                                 {result.networks.map((network) => (

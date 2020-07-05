@@ -67,7 +67,7 @@ const EpisodeContainer = styled.div`
     padding-right: 10px;
     overflow-y: auto;
     &::-webkit-scrollbar {
-        width: 4px;
+        width: 8px;
     }
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};
