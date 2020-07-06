@@ -62,8 +62,8 @@ const ArrowContainer = styled.div`
     position: relative;
     cursor: pointer;
     visibility: ${(props) => (props.out ? "visible" : "hidden")};
-    animation: ${(props) => (props.out ? fadeIn : fadeOut)} 1s ease-in-out;
-    transition: visibility 1s ease-in-out;
+    animation: ${(props) => (props.out ? fadeIn : fadeOut)} 1.5s ease-in-out;
+    transition: visibility 1.5s ease-in-out;
     z-index: 9999;
 `;
 

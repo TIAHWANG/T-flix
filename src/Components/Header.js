@@ -18,11 +18,18 @@ const Header = styled.header`
     padding: 20px;
     z-index: 10;
     /* box-shadow: 0px 1px 5px 2px rgba(251, 187, 179, 0.8); */
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        font-size: 14px;
+    }
 `;
 const LogoContainer = styled.div`
     width: 100px;
     height: 50px;
     padding-top: 2px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        width: 80px;
+        margin-right: 15px;
+    }
 `;
 
 const Logo = styled.div`
@@ -37,12 +44,16 @@ const Logo = styled.div`
 const List = styled.ul`
     display: flex;
 `;
+
 const ListItem = styled.li`
     width: 80px;
     height: 50px;
     text-align: center;
     border-bottom: 5px solid ${(props) => (props.current ? props.theme.pinkColor : "transparent")};
     transition: border-bottom 0.5s ease-in-out;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        width: 60px;
+    }
 `;
 
 const SLink = styled(Link)`
@@ -51,6 +62,9 @@ const SLink = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        width: 60px;
+    }
 `;
 
 export default withRouter(({ location: { pathname } }) => (
