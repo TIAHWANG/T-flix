@@ -28,6 +28,9 @@ const Name = styled.div`
     font-size: 12px;
     width: 55%;
     text-align: left;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        font-size: 10px;
+    }
 `;
 
 const Country = ({ id, name }) => (

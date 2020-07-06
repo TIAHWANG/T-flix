@@ -21,6 +21,9 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        padding: 0px;
+    }
 `;
 
 const BackDrop = styled.div`
@@ -45,6 +48,14 @@ const Content = styled.div`
     position: relative;
     z-index: 1;
     font-size: 18px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        width: 95%;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0);
+        font-size: 16px;
+    }
 `;
 
 const Cover = styled.div`
@@ -57,6 +68,9 @@ const Cover = styled.div`
     @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_PC}) {
         width: 40%;
     }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        display: none;
+    }
 `;
 
 const Data = styled.div`
@@ -66,7 +80,10 @@ const Data = styled.div`
     position: relative;
     @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_PC}) {
         width: 60%;
-        min-width: 55%;
+        margin: 20px 20px 0px;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        width: 100%;
     }
 `;
 
@@ -139,29 +156,11 @@ const CastScroll = styled.div`
     &::-webkit-scrollbar {
         height: 8px;
     }
-    &::-webkit-scrollbar-track {
+    /* &::-webkit-scrollbar-track {
         border: 1px solid ${(props) => props.theme.pinkColor};
-    }
+    } */
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};
-    }
-`;
-
-const CastContainer = styled.div`
-    width: 100%;
-    margin-right: 10px;
-    display: flex;
-    @media (max-width: 1400px) {
-        overflow-x: scroll;
-        &::-webkit-scrollbar {
-            height: 8px;
-        }
-        &::-webkit-scrollbar-track {
-            border: 1px solid ${(props) => props.theme.pinkColor};
-        }
-        &::-webkit-scrollbar-thumb {
-            background-color: ${(props) => props.theme.pinkColor};
-        }
     }
 `;
 
@@ -200,8 +199,10 @@ const VideoContainer = styled.div`
     grid-gap: 10px;
     margin-right: 10px;
     @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_PC}) {
-        grid-template-columns: repeat(1, 1fr);
         grid-auto-rows: 300px;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        grid-template-columns: repeat(1, 1fr);
     }
 `;
 
@@ -232,6 +233,9 @@ const CompanyGrid = styled.div`
     border-top: 1px solid ${(props) => props.theme.pinkColor};
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.2);
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        grid-template-columns: repeat(3, 1fr);
+    }
 `;
 
 const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
@@ -297,31 +301,17 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                     )}
                                     <ItemTitle>Starring</ItemTitle>
                                     {staff && staff.cast.length > 0 ? (
-                                        staff.cast.length <= 6 ? (
-                                            <CastContainer>
-                                                {staff.cast.map((actor) => (
-                                                    <Cast
-                                                        key={actor.id}
-                                                        id={actor.id}
-                                                        name={actor.name}
-                                                        imageUrl={actor.profile_path}
-                                                        character={actor.character}
-                                                    />
-                                                ))}
-                                            </CastContainer>
-                                        ) : (
-                                            <CastScroll>
-                                                {staff.cast.map((actor) => (
-                                                    <Cast
-                                                        key={actor.id}
-                                                        id={actor.id}
-                                                        name={actor.name}
-                                                        imageUrl={actor.profile_path}
-                                                        character={actor.character}
-                                                    />
-                                                ))}
-                                            </CastScroll>
-                                        )
+                                        <CastScroll>
+                                            {staff.cast.map((actor) => (
+                                                <Cast
+                                                    key={actor.id}
+                                                    id={actor.id}
+                                                    name={actor.name}
+                                                    imageUrl={actor.profile_path}
+                                                    character={actor.character}
+                                                />
+                                            ))}
+                                        </CastScroll>
                                     ) : (
                                         <NoContentMessage>
                                             No Starring Information{" "}
@@ -329,6 +319,16 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                                 😢
                                             </span>
                                         </NoContentMessage>
+                                    )}
+                                    {result.created_by && result.created_by.length > 0 && (
+                                        <>
+                                            <ItemTitle>Creator</ItemTitle>
+                                            <CreatorContainer>
+                                                {result.created_by.map((creator) => (
+                                                    <Cast key={creator.id} id={creator.id} name={creator.name} imageUrl={creator.profile_path} />
+                                                ))}
+                                            </CreatorContainer>
+                                        </>
                                     )}
                                     {result.belongs_to_collection && (
                                         <>
@@ -340,16 +340,6 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                                     title={result.belongs_to_collection.name}
                                                 />
                                             </CollectionContainer>
-                                        </>
-                                    )}
-                                    {result.created_by && result.created_by.length > 0 && (
-                                        <>
-                                            <ItemTitle>Creator</ItemTitle>
-                                            <CreatorContainer>
-                                                {result.created_by.map((creator) => (
-                                                    <Cast key={creator.id} id={creator.id} name={creator.name} imageUrl={creator.profile_path} />
-                                                ))}
-                                            </CreatorContainer>
                                         </>
                                     )}
                                     {result.seasons && result.seasons.length > 0 ? (
@@ -391,7 +381,12 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                     <VideoContainer>
                                         {result.videos.results.length > 0 ? (
                                             result.videos.results.map((video) => (
-                                                <Video key={video.id} id={video.id} videoUrl={video.key} name={video.name} />
+                                                <Video
+                                                    key={video.id}
+                                                    id={video.id}
+                                                    videoUrl={video.key}
+                                                    name={video.name && video.name.length > 35 ? `${video.name.substring(0, 35)}...` : video.name}
+                                                />
                                             ))
                                         ) : (
                                             <NoContentMessage>

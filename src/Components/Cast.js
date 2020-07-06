@@ -4,8 +4,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-    margin-top: 5px;
-    margin-bottom: 10px;
+    margin: 5px 0px;
 `;
 
 const Image = styled.div`

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import Loader from "Components/Loader";
 import ActorImage from "Components/ActorImage";
@@ -12,6 +13,9 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        padding: 0px;
+    }
 `;
 
 const BackDrop = styled.div`
@@ -36,6 +40,14 @@ const Content = styled.div`
     position: relative;
     z-index: 1;
     font-size: 18px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        width: 95%;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0);
+        font-size: 16px;
+    }
 `;
 
 const Cover = styled.div`
@@ -45,12 +57,22 @@ const Cover = styled.div`
     background-position: center center;
     background-size: cover;
     border-radius: 5px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        display: none;
+    }
 `;
 
 const Data = styled.div`
     min-width: 45%;
     width: 50%;
     margin: 10px 20px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_PC}) {
+        width: 60%;
+        margin: 20px 20px 0px;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        width: 100%;
+    }
 `;
 
 const ActorName = styled.h3`
@@ -130,7 +152,7 @@ const ImageScroll = styled.div`
     }
 `;
 
-export default ({ person, error, loading, imageUrl, imageClick, isClicked }) =>
+const PersonPresenter = ({ person, error, loading, imageUrl, imageClick, backDropUrl }) =>
     loading ? (
         <>
             <Helmet>
@@ -143,7 +165,7 @@ export default ({ person, error, loading, imageUrl, imageClick, isClicked }) =>
             <Helmet>
                 <title>{person.name} | T-flix</title>
             </Helmet>
-            <BackDrop bgImage={person.profile_path ? `https://image.tmdb.org/t/p/original${person.profile_path}` : null} />
+            <BackDrop bgImage={person.profile_path ? backDropUrl : null} />
             <Content>
                 <Cover bgImage={person.profile_path ? imageUrl : require("../../Assets/noActor.png")} />
                 <Data>
@@ -233,3 +255,14 @@ export default ({ person, error, loading, imageUrl, imageClick, isClicked }) =>
             </Content>
         </Container>
     );
+
+PersonPresenter.propTypes = {
+    person: PropTypes.object,
+    error: PropTypes.string,
+    loading: PropTypes.bool,
+    imageUrl: PropTypes.string,
+    imageClick: PropTypes.func,
+    backDropUrl: PropTypes.string,
+};
+
+export default PersonPresenter;

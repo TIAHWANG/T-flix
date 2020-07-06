@@ -9,6 +9,9 @@ const TabList = styled.ul`
     justify-content: space-between;
     position: absolute;
     bottom: 0px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        font-size: 12px;
+    }
 `;
 
 const TabContent = styled.div``;
