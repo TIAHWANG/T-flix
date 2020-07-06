@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/T-flix/static/js/main.d82aacfc.chunk.js",
-    "main.js.map": "/T-flix/static/js/main.d82aacfc.chunk.js.map",
+    "main.js": "/T-flix/static/js/main.2f0daba8.chunk.js",
+    "main.js.map": "/T-flix/static/js/main.2f0daba8.chunk.js.map",
     "runtime-main.js": "/T-flix/static/js/runtime-main.0b27fec1.js",
     "runtime-main.js.map": "/T-flix/static/js/runtime-main.0b27fec1.js.map",
     "static/js/2.203e8781.chunk.js": "/T-flix/static/js/2.203e8781.chunk.js",
     "static/js/2.203e8781.chunk.js.map": "/T-flix/static/js/2.203e8781.chunk.js.map",
     "index.html": "/T-flix/index.html",
-    "precache-manifest.5bf5a03eadcf4dee4c91f603df4bca1b.js": "/T-flix/precache-manifest.5bf5a03eadcf4dee4c91f603df4bca1b.js",
+    "precache-manifest.5890015a65102d2ced8982e3f92aaecd.js": "/T-flix/precache-manifest.5890015a65102d2ced8982e3f92aaecd.js",
     "service-worker.js": "/T-flix/service-worker.js",
     "static/js/2.203e8781.chunk.js.LICENSE.txt": "/T-flix/static/js/2.203e8781.chunk.js.LICENSE.txt",
     "static/media/blackListLogo.png": "/T-flix/static/media/blackListLogo.be5bb3e1.png",
@@ -19,6 +19,6 @@
   "entrypoints": [
     "static/js/runtime-main.0b27fec1.js",
     "static/js/2.203e8781.chunk.js",
-    "static/js/main.d82aacfc.chunk.js"
+    "static/js/main.2f0daba8.chunk.js"
   ]
 }
