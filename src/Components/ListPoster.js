@@ -9,8 +9,9 @@ const Container = styled.div`
     color: white;
     margin-right: 10px;
     @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
-        width: 150px;
-        height: 250px;
+        width: 100%;
+        height: 100%;
+        margin-right: 0px;
     }
 `;
 
@@ -22,7 +23,9 @@ const Image = styled.div`
     height: 350px;
     transition: opacity 0.3s linear;
     @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
-        height: 200px;
+        width: 95%;
+        height: 150px;
+        margin: 0 auto;
     }
 `;
 
@@ -60,7 +63,7 @@ const Year = styled.span`
     color: rgba(255, 255, 255, 0.5);
 `;
 
-const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) => (
+const ListPoster = ({ id, imageUrl, title, rating, year, isMovie = false }) => (
     <Link to={isMovie ? `/movie/${id}` : `/tv/${id}`}>
         <Container>
             <ImageContainer>
@@ -72,13 +75,13 @@ const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) => (
                     {rating}/10
                 </Rating>
             </ImageContainer>
-            <Title>{title.length > 20 ? ` ${title.substring(0, 20)}...` : title}</Title>
+            <Title>{title.length > 15 ? ` ${title.substring(0, 15)}...` : title}</Title>
             <Year>{year}</Year>
         </Container>
     </Link>
 );
 
-Poster.propTypes = {
+ListPoster.propTypes = {
     id: PropTypes.number.isRequired,
     imageUrl: PropTypes.string,
     title: PropTypes.string.isRequired,
@@ -87,4 +90,4 @@ Poster.propTypes = {
     isMovie: PropTypes.bool,
 };
 
-export default Poster;
+export default ListPoster;

@@ -3,19 +3,29 @@ import styled, { keyframes } from "styled-components";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { withRouter } from "react-router-dom";
-import Poster from "Components/Poster";
 import Loader from "Components/Loader";
+import ListPoster from "Components/ListPoster";
 
 const Container = styled.div`
-    padding: ${(props) => props.theme.padding};
+    padding: 20px ${(props) => props.theme.padding} ${(props) => props.theme.padding};
     width: 100%;
     display: ${(props) => (props.current ? "block" : "none")};
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        padding: 20px;
+    }
 `;
 
 const Title = styled.div`
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 20px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        font-size: 20px;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        font-size: 18px;
+        padding: 0px 5px;
+    }
 `;
 
 const PosterContainer = styled.div`
@@ -23,6 +33,11 @@ const PosterContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 25%);
+        grid-auto-rows: 200px;
+    }
 `;
 
 const fadeIn = keyframes`
@@ -61,6 +76,10 @@ const Arrow = styled.svg`
     &:hover {
         transform: scale(1.2);
     }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        position: fixed;
+        left: 45.5%;
+    }
 `;
 
 const ListPresenter = withRouter(
@@ -93,7 +112,7 @@ const ListPresenter = withRouter(
                                 <PosterContainer>
                                     {nowPlayingList.length > 0 &&
                                         nowPlayingList.map((movie) => (
-                                            <Poster
+                                            <ListPoster
                                                 key={movie.id}
                                                 id={movie.id}
                                                 rating={movie.vote_average}
@@ -101,6 +120,7 @@ const ListPresenter = withRouter(
                                                 imageUrl={movie.poster_path}
                                                 year={movie.release_date && movie.release_date.substring(0, 4)}
                                                 isMovie={true}
+                                                style={{ width: "80%" }}
                                             />
                                         ))}
                                 </PosterContainer>
@@ -110,7 +130,7 @@ const ListPresenter = withRouter(
                 </Container>
                 <Container current={pathname.includes("upcoming")}>
                     {isVisible && (
-                        <ArrowContainer onClick={() => scrollToTop()}>
+                        <ArrowContainer onClick={() => scrollToTop()} out={isVisible}>
                             <Arrow xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24">
                                 <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 7.58l5.995 5.988-1.416 1.414-4.579-4.574-4.59 4.574-1.416-1.414 6.006-5.988z" />
                             </Arrow>
@@ -122,7 +142,7 @@ const ListPresenter = withRouter(
                             <PosterContainer>
                                 {upcomingList.length > 0 &&
                                     upcomingList.map((movie) => (
-                                        <Poster
+                                        <ListPoster
                                             key={movie.id}
                                             id={movie.id}
                                             rating={movie.vote_average}
@@ -138,7 +158,7 @@ const ListPresenter = withRouter(
                 </Container>
                 <Container current={pathname.includes("popular")}>
                     {isVisible && (
-                        <ArrowContainer onClick={() => scrollToTop()}>
+                        <ArrowContainer onClick={() => scrollToTop()} out={isVisible}>
                             <Arrow xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24">
                                 <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 7.58l5.995 5.988-1.416 1.414-4.579-4.574-4.59 4.574-1.416-1.414 6.006-5.988z" />
                             </Arrow>
@@ -150,7 +170,7 @@ const ListPresenter = withRouter(
                             <PosterContainer>
                                 {popularMovieList.length > 0 &&
                                     popularMovieList.map((movie) => (
-                                        <Poster
+                                        <ListPoster
                                             key={movie.id}
                                             id={movie.id}
                                             rating={movie.vote_average}
@@ -169,7 +189,7 @@ const ListPresenter = withRouter(
             <>
                 <Container current={pathname.includes("top")}>
                     {isVisible && (
-                        <ArrowContainer onClick={() => scrollToTop()}>
+                        <ArrowContainer onClick={() => scrollToTop()} out={isVisible}>
                             <Arrow xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24">
                                 <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 7.58l5.995 5.988-1.416 1.414-4.579-4.574-4.59 4.574-1.416-1.414 6.006-5.988z" />
                             </Arrow>
@@ -181,7 +201,7 @@ const ListPresenter = withRouter(
                             <PosterContainer>
                                 {topRatedList.length > 0 &&
                                     topRatedList.map((tv) => (
-                                        <Poster
+                                        <ListPoster
                                             key={tv.id}
                                             id={tv.id}
                                             rating={tv.vote_average}
@@ -197,7 +217,7 @@ const ListPresenter = withRouter(
                 </Container>
                 <Container current={pathname.includes("airing")}>
                     {isVisible && (
-                        <ArrowContainer onClick={() => scrollToTop()}>
+                        <ArrowContainer onClick={() => scrollToTop()} out={isVisible}>
                             <Arrow xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24">
                                 <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 7.58l5.995 5.988-1.416 1.414-4.579-4.574-4.59 4.574-1.416-1.414 6.006-5.988z" />
                             </Arrow>
@@ -209,7 +229,7 @@ const ListPresenter = withRouter(
                             <PosterContainer>
                                 {airingList.length > 0 &&
                                     airingList.map((tv) => (
-                                        <Poster
+                                        <ListPoster
                                             key={tv.id}
                                             id={tv.id}
                                             rating={tv.vote_average}
@@ -225,7 +245,7 @@ const ListPresenter = withRouter(
                 </Container>
                 <Container current={pathname.includes("popular")}>
                     {isVisible && (
-                        <ArrowContainer onClick={() => scrollToTop()}>
+                        <ArrowContainer onClick={() => scrollToTop()} out={isVisible}>
                             <Arrow xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 24 24">
                                 <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 7.58l5.995 5.988-1.416 1.414-4.579-4.574-4.59 4.574-1.416-1.414 6.006-5.988z" />
                             </Arrow>
@@ -237,7 +257,7 @@ const ListPresenter = withRouter(
                             <PosterContainer>
                                 {popularTvList.length > 0 &&
                                     popularTvList.map((tv) => (
-                                        <Poster
+                                        <ListPoster
                                             key={tv.id}
                                             id={tv.id}
                                             rating={tv.vote_average}

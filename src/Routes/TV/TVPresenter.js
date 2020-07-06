@@ -2,14 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 import Section from "Components/Section";
 import Loader from "Components/Loader";
 import Message from "Components/Message";
 import Poster from "Components/Poster";
-import { Link } from "react-router-dom";
 
 const Container = styled.div`
     padding: 0px ${(props) => props.theme.padding} ${(props) => props.theme.padding};
+    width: 100%;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        padding: 0px 20px 20px;
+    }
 `;
 
 const MainContainer = styled.div`
@@ -18,12 +22,15 @@ const MainContainer = styled.div`
     padding-top: 20px;
     margin-bottom: 40px;
     position: relative;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        height: 30vh;
+    }
 `;
 
 const MainPoster = styled.div`
     background-image: url(${(props) => props.bgUrl});
     background-size: cover;
-    background-position: center;
+    background-position: center center;
     width: 100%;
     height: 100%;
 `;
@@ -37,6 +44,18 @@ const MainLogo = styled.div`
     position: absolute;
     bottom: -5px;
     left: 0;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        width: 600px;
+        height: 200px;
+        position: absolute;
+        bottom: -15px;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        width: 250px;
+        height: 100px;
+        position: absolute;
+        bottom: -25px;
+    }
 `;
 
 const MainDetail = styled.div`
@@ -58,12 +77,34 @@ const MainDetail = styled.div`
     &:hover {
         border-radius: 30px;
     }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        width: 135px;
+        height: 35px;
+        position: absolute;
+        bottom: 24%;
+        left: 13px;
+        font-size: 16px;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        width: 100px;
+        height: 30px;
+        position: absolute;
+        bottom: 27%;
+        left: 5px;
+        font-size: 12px;
+    }
 `;
 
 const MainButton = styled.div`
     display: flex;
     align-items: center;
     padding-left: 15px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        padding-left: 12px;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        padding-left: 7px;
+    }
 `;
 
 const Arrow = styled.svg`
@@ -71,6 +112,20 @@ const Arrow = styled.svg`
     bottom: 16px;
     right: 15px;
     fill: ${(props) => props.theme.pinkColor};
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        position: absolute;
+        bottom: 10px;
+        right: 9px;
+        width: 12px;
+        height: 12px;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        position: absolute;
+        bottom: 9px;
+        right: 5px;
+        width: 10px;
+        height: 10px;
+    }
 `;
 
 const PosterScroll = styled.div`
