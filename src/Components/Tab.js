@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const TabList = styled.li`
-    padding-bottom: 5px;
+    padding-bottom: 7px;
     cursor: pointer;
     transition: border-bottom 0.5s ease-in-out;
 `;

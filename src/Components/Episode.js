@@ -47,6 +47,7 @@ const Item = styled.p`
     width: 95%;
     opacity: 0.7;
     margin-bottom: 10px;
+    line-height: 1.2;
 `;
 
 const Image = styled.div`

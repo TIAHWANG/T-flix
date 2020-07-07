@@ -43,7 +43,7 @@ const Content = styled.div`
     display: flex;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 5px;
-    width: 80%;
+    width: 100%;
     height: 100%;
     position: relative;
     z-index: 1;
@@ -53,7 +53,6 @@ const Content = styled.div`
     }
     @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
         width: 100%;
-        background-color: rgba(255, 255, 255, 0);
         font-size: 16px;
     }
 `;
@@ -112,7 +111,7 @@ const Divider = styled.div`
 const Description = styled.div`
     line-height: 1.5;
     width: 100%;
-    height: 83%;
+    height: 75%;
     overflow-y: auto;
     &::-webkit-scrollbar {
         width: 8px;
@@ -124,6 +123,9 @@ const Description = styled.div`
         border: 1px solid ${(props) => props.theme.pinkColor};
     }
     padding-right: 10px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        max-height: 80%;
+    }
 `;
 
 const TabContainer = styled.div`
@@ -132,6 +134,7 @@ const TabContainer = styled.div`
 
 const Overview = styled.p`
     opacity: 0.7;
+    line-height: 1.5;
     margin-bottom: 20px;
 `;
 
@@ -156,9 +159,9 @@ const CastScroll = styled.div`
     &::-webkit-scrollbar {
         height: 8px;
     }
-    /* &::-webkit-scrollbar-track {
+    &::-webkit-scrollbar-track {
         border: 1px solid ${(props) => props.theme.pinkColor};
-    } */
+    }
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};
     }
@@ -284,8 +287,8 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                             {result.vote_average} / 10
                         </Item>
                     </ItemContainer>
+                    <Overview>{result.overview}</Overview>
                     <Description>
-                        <Overview>{result.overview}</Overview>
                         <TabContainer>
                             <Tabs>
                                 <div label="Overview">

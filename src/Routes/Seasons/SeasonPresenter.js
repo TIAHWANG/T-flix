@@ -14,6 +14,9 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        padding: 0px;
+    }
 `;
 
 const BackDrop = styled.div`
@@ -36,6 +39,12 @@ const Cover = styled.div`
     background-position: center center;
     background-size: cover;
     border-radius: 5px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_PC}) {
+        width: 40%;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        display: none;
+    }
 `;
 
 const Content = styled.div`
@@ -45,18 +54,35 @@ const Content = styled.div`
     width: 80%;
     height: 100%;
     z-index: 1;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        width: 95%;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        width: 100%;
+        font-size: 16px;
+    }
 `;
 
 const Data = styled.div`
     min-width: 45%;
     width: 50%;
     margin: 10px 20px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_PC}) {
+        width: 60%;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        width: 100%;
+        margin: 20px;
+    }
 `;
 
 const Title = styled.div`
     font-size: 30px;
     font-weight: 600;
     margin-bottom: 10px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        font-size: 25px;
+    }
 `;
 
 const EpisodeContainer = styled.div`

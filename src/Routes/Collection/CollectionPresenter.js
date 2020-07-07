@@ -14,6 +14,9 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        padding: 0px;
+    }
 `;
 
 const BackDrop = styled.div`
@@ -36,6 +39,12 @@ const Cover = styled.div`
     background-position: center center;
     background-size: cover;
     border-radius: 5px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_PC}) {
+        width: 40%;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        display: none;
+    }
 `;
 
 const Content = styled.div`
@@ -46,6 +55,13 @@ const Content = styled.div`
     height: 100%;
     position: relative;
     z-index: 1;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        width: 95%;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        width: 100%;
+        font-size: 16px;
+    }
 `;
 
 const Data = styled.div`
@@ -54,11 +70,21 @@ const Data = styled.div`
     margin: 10px 20px;
     position: relative;
     overflow: hidden;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_PC}) {
+        width: 60%;
+    }
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        width: 100%;
+        margin: 20px;
+    }
 `;
 
 const MovieTitle = styled.h3`
     font-size: 30px;
     font-weight: 600;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
+        font-size: 25px;
+    }
 `;
 
 const Overview = styled.p`

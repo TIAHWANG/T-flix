@@ -20,9 +20,10 @@ const Logo = styled.div`
     margin-bottom: 10px;
 `;
 
-const Name = styled.span`
+const Name = styled.div`
     line-height: 1.2;
     font-size: 10px;
+    margin-bottom: 5px;
 `;
 
 const Company = ({ id, name, logoUrl }) => (

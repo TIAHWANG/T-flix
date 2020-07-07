@@ -58,7 +58,7 @@ const Recommend = ({ id, imageUrl, title, rating, isMovie = false }) => (
                     {rating}/10
                 </Rating>
             </ImageContainer>
-            <Title>{title.length > 28 ? ` ${title.substring(0, 28)}...` : title}</Title>
+            <Title>{title.length > 20 ? ` ${title.substring(0, 20)}...` : title}</Title>
         </Container>
     </Link>
 );
