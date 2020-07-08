@@ -9,6 +9,9 @@ import Poster from "Components/Poster";
 
 const Container = styled.div`
     padding: ${(props) => props.theme.padding};
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        padding: 20px;
+    }
 `;
 
 const PosterScroll = styled.div`
@@ -37,11 +40,14 @@ const Form = styled.form`
 
 const Input = styled.input`
     all: unset;
-    font-size: 28px;
+    font-size: 25px;
     width: 100%;
     background-color: ${(props) => props.theme.black};
     border: 1px solid ${(props) => props.theme.pinkColor};
     padding: 10px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        font-size: 18px;
+    }
 `;
 
 const SearchPresenter = ({ movieResults, tvResults, searchTerm, error, loading, handleSubmit, updateTerm, isVisible }) => (

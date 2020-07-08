@@ -43,7 +43,7 @@ const Content = styled.div`
     display: flex;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 5px;
-    width: 100%;
+    width: 80%;
     height: 100%;
     position: relative;
     z-index: 1;
@@ -111,7 +111,7 @@ const Divider = styled.div`
 const Description = styled.div`
     line-height: 1.5;
     width: 100%;
-    height: 75%;
+    height: 82%;
     overflow-y: auto;
     &::-webkit-scrollbar {
         width: 8px;
@@ -123,9 +123,6 @@ const Description = styled.div`
         border: 1px solid ${(props) => props.theme.pinkColor};
     }
     padding-right: 10px;
-    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
-        max-height: 80%;
-    }
 `;
 
 const TabContainer = styled.div`
@@ -287,8 +284,8 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                             {result.vote_average} / 10
                         </Item>
                     </ItemContainer>
-                    <Overview>{result.overview}</Overview>
                     <Description>
+                        <Overview>{result.overview}</Overview>
                         <TabContainer>
                             <Tabs>
                                 <div label="Overview">
