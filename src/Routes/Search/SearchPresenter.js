@@ -18,7 +18,7 @@ const PosterScroll = styled.div`
     width: 100%;
     display: flex;
     margin-right: 10px;
-    overflow-x: scroll;
+    overflow-x: auto;
     &::-webkit-scrollbar {
         height: 10px;
     }

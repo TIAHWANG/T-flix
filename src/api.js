@@ -24,7 +24,7 @@ export const moviesApi = {
     searchMovie: (term) =>
         api.get("search/movie", {
             params: {
-                query: encodeURIComponent(term),
+                query: term,
             },
         }),
     movieCast: (id) => api.get(`movie/${id}/credits`),
@@ -45,7 +45,7 @@ export const tvApi = {
     searchTv: (term) =>
         api.get("search/tv", {
             params: {
-                query: encodeURIComponent(term),
+                query: term,
             },
         }),
     tvCast: (id) => api.get(`tv/${id}/credits`),

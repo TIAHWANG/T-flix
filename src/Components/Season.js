@@ -9,6 +9,7 @@ const Container = styled.div`
     color: white;
     margin-right: 10px;
     font-size: 12px;
+    margin-bottom: 10px;
 `;
 
 const Image = styled.div`
@@ -31,8 +32,7 @@ const ImageContainer = styled.div`
     }
 `;
 
-const Title = styled.span`
-    display: block;
+const Title = styled.div`
     margin-bottom: 2px;
 `;
 
@@ -41,9 +41,17 @@ const Season = withRouter(({ match: { url }, id, imageUrl, seasonNum, title }) =
         <Link to={`${url}/season/${id}/${title}`}>
             <Container>
                 <ImageContainer>
-                    <Image bgUrl={imageUrl ? `https://image.tmdb.org/t/p/w300${imageUrl}` : require("../Assets/noPosterSmall.png")} />
+                    <Image
+                        bgUrl={
+                            imageUrl
+                                ? `https://image.tmdb.org/t/p/w300${imageUrl}`
+                                : require("../Assets/noPosterSmall.png")
+                        }
+                    />
                 </ImageContainer>
-                <Title>{seasonNum.length > 28 ? ` ${seasonNum.substring(0, 28)}...` : seasonNum}</Title>
+                <Title>
+                    {seasonNum.length > 28 ? ` ${seasonNum.substring(0, 28)}...` : seasonNum}
+                </Title>
             </Container>
         </Link>
     );

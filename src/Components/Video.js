@@ -22,7 +22,12 @@ const Name = styled.span`
 
 const Video = ({ id, videoUrl, name }) => (
     <Container>
-        <Item id={id} allow="fullscreen" frameborder="0" src={`https://www.youtube.com/embed/${videoUrl}`} />
+        <Item
+            id={id}
+            allow="fullscreen"
+            frameborder="0"
+            src={`https://www.youtube.com/embed/${videoUrl}`}
+        />
         <Name>{name}</Name>
     </Container>
 );

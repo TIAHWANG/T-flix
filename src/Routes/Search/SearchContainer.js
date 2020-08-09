@@ -30,6 +30,7 @@ export default class extends React.Component {
 
     searchByTerm = async () => {
         const { searchTerm } = this.state;
+        console.log(encodeURIComponent(searchTerm));
         this.setState({ loading: true });
         try {
             const {

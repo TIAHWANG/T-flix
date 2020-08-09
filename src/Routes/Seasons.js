@@ -1,7 +1,9 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 import { Helmet } from "react-helmet";
+import { useParams, useHistory, useLocation } from "react-router-dom";
+import { tvApi } from "../api";
 import Loader from "Components/Loader";
 import Episode from "Components/Episode";
 
@@ -107,8 +109,39 @@ const NoContentMessage = styled.div`
     opacity: 0.9;
 `;
 
-const SeasonPresenter = ({ season, showName, error, loading }) =>
-    loading ? (
+const Seasons = () => {
+    const { id } = useParams();
+    const { push } = useHistory();
+    const { pathname } = useLocation();
+
+    const [loading, setLoading] = useState(true);
+    const [season, setSeason] = useState([]);
+    const [showName, setShowName] = useState(null);
+    const [error, setError] = useState(null);
+
+    const getSeasonData = async () => {
+        const showName = pathname.split("/")[5];
+        const tvId = pathname.split("/")[2];
+        const parsedId = parseInt(id);
+        if (isNaN(parsedId)) {
+            return push("/");
+        }
+        try {
+            const { data: season } = await tvApi.seasons(tvId, parsedId);
+            setSeason(season);
+            setShowName(showName);
+        } catch {
+            setError("Can't find anything.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getSeasonData();
+    }, []);
+
+    return loading ? (
         <>
             <Helmet>
                 <title>Loading | T-flix</title>
@@ -118,13 +151,21 @@ const SeasonPresenter = ({ season, showName, error, loading }) =>
     ) : (
         <Container>
             <Helmet>
-                <title>{showName} | T-flix</title>
+                <title>{`${showName}`} | T-flix</title>
             </Helmet>
-            <BackDrop bgImage={season.poster_path ? `https://image.tmdb.org/t/p/original${season.poster_path}` : null} />
+            <BackDrop
+                bgImage={
+                    season.poster_path
+                        ? `https://image.tmdb.org/t/p/original${season.poster_path}`
+                        : null
+                }
+            />
             <Content>
                 <Cover
                     bgImage={
-                        season.poster_path ? `https://image.tmdb.org/t/p/original${season.poster_path}` : require("../../Assets/noPosterSmall.png")
+                        season.poster_path
+                            ? `https://image.tmdb.org/t/p/original${season.poster_path}`
+                            : require("../Assets/noPosterSmall.png")
                     }
                 />
                 <Data>
@@ -160,11 +201,29 @@ const SeasonPresenter = ({ season, showName, error, loading }) =>
             </Content>
         </Container>
     );
-
-SeasonPresenter.propTypes = {
-    season: PropTypes.object,
-    error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
 };
 
-export default SeasonPresenter;
+Seasons.propTypes = {
+    season: PropTypes.objectOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            overview: PropTypes.string,
+            poster_path: PropTypes.string,
+            episodes: PropTypes.objectOf(
+                PropTypes.shape({
+                    id: PropTypes.number.isRequired,
+                    air_date: PropTypes.string,
+                    name: PropTypes.string,
+                    overview: PropTypes.string,
+                    episode_number: PropTypes.number.isRequired,
+                    still_path: PropTypes.string,
+                }).isRequired
+            ).isRequired,
+        }).isRequired
+    ),
+    error: PropTypes.string,
+    loading: PropTypes.bool,
+};
+
+export default Seasons;

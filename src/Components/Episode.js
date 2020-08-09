@@ -43,7 +43,7 @@ const ItemTitle = styled.div`
     opacity: 0.9;
 `;
 
-const Item = styled.p`
+const Item = styled.span`
     width: 95%;
     opacity: 0.7;
     margin-bottom: 10px;
@@ -73,7 +73,13 @@ const Episode = ({ id, imageUrl, overview, date, title }) => (
             </Data>
         </Column>
         <Column style={{ width: "30%" }}>
-            <Image bgUrl={imageUrl ? `https://image.tmdb.org/t/p/original${imageUrl}` : require("../Assets/noPosterSmall.png")} />
+            <Image
+                bgUrl={
+                    imageUrl
+                        ? `https://image.tmdb.org/t/p/original${imageUrl}`
+                        : require("../Assets/noPosterSmall.png")
+                }
+            />
         </Column>
     </Container>
 );
@@ -81,7 +87,7 @@ const Episode = ({ id, imageUrl, overview, date, title }) => (
 Episode.propTypes = {
     id: PropTypes.number.isRequired,
     imageUrl: PropTypes.string,
-    overview: PropTypes.string,
+    // overview: PropTypes.string,
     date: PropTypes.string,
     title: PropTypes.string,
 };

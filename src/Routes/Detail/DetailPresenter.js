@@ -152,7 +152,7 @@ const Genre = styled.div`
 const CastScroll = styled.div`
     display: flex;
     margin-right: 10px;
-    overflow-x: scroll;
+    overflow-x: auto;
     &::-webkit-scrollbar {
         height: 8px;
     }
@@ -172,6 +172,7 @@ const CreatorContainer = styled.div`
 
 const CollectionContainer = styled.div`
     width: 100%;
+    margin-bottom: 10px;
 `;
 
 const SeasonContainer = styled.div`
@@ -191,6 +192,7 @@ const SeasonScroll = styled.div`
     &::-webkit-scrollbar-thumb {
         background-color: ${(props) => props.theme.pinkColor};
     }
+    margin-bottom: 10px;
 `;
 
 const VideoContainer = styled.div`
@@ -203,6 +205,9 @@ const VideoContainer = styled.div`
     }
     @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
         grid-template-columns: repeat(1, 1fr);
+        &:last-child {
+            margin-bottom: 10px;
+        }
     }
 `;
 
@@ -251,26 +256,54 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
             <Helmet>
                 <title>{result.title ? result.title : result.name} | T-flix</title>
             </Helmet>
-            <BackDrop bgImage={result.backdrop_path ? `https://image.tmdb.org/t/p/original${result.backdrop_path}` : null} />
+            <BackDrop
+                bgImage={
+                    result.backdrop_path
+                        ? `https://image.tmdb.org/t/p/original${result.backdrop_path}`
+                        : null
+                }
+            />
             <Content>
                 <Cover
                     bgImage={
-                        result.poster_path ? `https://image.tmdb.org/t/p/original${result.poster_path}` : require("../../Assets/noPosterSmall.png")
+                        result.poster_path
+                            ? `https://image.tmdb.org/t/p/original${result.poster_path}`
+                            : require("../../Assets/noPosterSmall.png")
                     }
                 />
                 <Data>
                     <MovieTitle>{result.title ? result.title : result.name}</MovieTitle>
                     <ItemContainer>
-                        <Item>{result.release_date ? result.release_date.substring(0, 4) : result.first_air_date.substring(0, 4)}</Item>
+                        <Item>
+                            {result.release_date
+                                ? result.release_date.substring(0, 4)
+                                : result.first_air_date.substring(0, 4)}
+                        </Item>
                         <Divider>•</Divider>
-                        <Item>{result.episode_run_time ? result.episode_run_time[0] : result.runtime !== 0 ? result.runtime : 0} min</Item>
+                        <Item>
+                            {result.episode_run_time
+                                ? result.episode_run_time[0]
+                                : result.runtime !== 0
+                                ? result.runtime
+                                : 0}{" "}
+                            min
+                        </Item>
                         {result.imdb_id && (
                             <>
                                 <Divider>•</Divider>
                                 <Item
-                                    style={{ color: "#000000", backgroundColor: "#F5C517", fontWeight: 600, borderRadius: "3px", padding: "0px 5px" }}
+                                    style={{
+                                        color: "#000000",
+                                        backgroundColor: "#F5C517",
+                                        fontWeight: 600,
+                                        borderRadius: "3px",
+                                        padding: "0px 5px",
+                                    }}
                                 >
-                                    <Imdb target="_blank" href={`https://www.imdb.com/title/${result.imdb_id}`}>
+                                    <Imdb
+                                        target="_blank"
+                                        href={`https://www.imdb.com/title/${result.imdb_id}`}
+                                    >
                                         IMDb
                                     </Imdb>
                                 </Item>
@@ -294,7 +327,9 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             <ItemTitle>Genres</ItemTitle>
                                             <Genre>
                                                 {result.genres.map((genre, index) =>
-                                                    index === result.genres.length - 1 ? genre.name : `${genre.name} • `
+                                                    index === result.genres.length - 1
+                                                        ? genre.name
+                                                        : `${genre.name} • `
                                                 )}
                                             </Genre>
                                         </>
@@ -325,7 +360,12 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             <ItemTitle>Creator</ItemTitle>
                                             <CreatorContainer>
                                                 {result.created_by.map((creator) => (
-                                                    <Cast key={creator.id} id={creator.id} name={creator.name} imageUrl={creator.profile_path} />
+                                                    <Cast
+                                                        key={creator.id}
+                                                        id={creator.id}
+                                                        name={creator.name}
+                                                        imageUrl={creator.profile_path}
+                                                    />
                                                 ))}
                                             </CreatorContainer>
                                         </>
@@ -336,7 +376,9 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             <CollectionContainer>
                                                 <CollectionPoster
                                                     id={result.belongs_to_collection.id}
-                                                    imageUrl={result.belongs_to_collection.poster_path}
+                                                    imageUrl={
+                                                        result.belongs_to_collection.poster_path
+                                                    }
                                                     title={result.belongs_to_collection.name}
                                                 />
                                             </CollectionContainer>
@@ -385,7 +427,11 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                                     key={video.id}
                                                     id={video.id}
                                                     videoUrl={video.key}
-                                                    name={video.name && video.name.length > 35 ? `${video.name.substring(0, 35)}...` : video.name}
+                                                    name={
+                                                        video.name && video.name.length > 35
+                                                            ? `${video.name.substring(0, 35)}...`
+                                                            : video.name
+                                                    }
                                                 />
                                             ))
                                         ) : (
@@ -408,7 +454,9 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                                         key={movie.id}
                                                         id={movie.id}
                                                         imageUrl={movie.backdrop_path}
-                                                        title={movie.title ? movie.title : movie.name}
+                                                        title={
+                                                            movie.title ? movie.title : movie.name
+                                                        }
                                                         rating={movie.vote_average}
                                                         isMovie={movie.title ? true : false}
                                                     />
@@ -427,10 +475,16 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                 <div label="Details">
                                     <CompanyContainer>
                                         <ItemTitle>Production Companies</ItemTitle>
-                                        {result.production_companies && result.production_companies.length > 0 ? (
+                                        {result.production_companies &&
+                                        result.production_companies.length > 0 ? (
                                             <CompanyGrid style={{ gridAutoRows: "80px" }}>
                                                 {result.production_companies.map((company) => (
-                                                    <Company key={company.id} id={company.id} name={company.name} logoUrl={company.logo_path} />
+                                                    <Company
+                                                        key={company.id}
+                                                        id={company.id}
+                                                        name={company.name}
+                                                        logoUrl={company.logo_path}
+                                                    />
                                                 ))}
                                             </CompanyGrid>
                                         ) : (
@@ -442,22 +496,32 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             </NoContentMessage>
                                         )}
                                     </CompanyContainer>
-                                    {result.production_countries && result.production_countries.length > 0 && (
-                                        <CompanyContainer>
-                                            <ItemTitle>Production Countries</ItemTitle>
-                                            <CompanyGrid style={{ gridAutoRows: "40px" }}>
-                                                {result.production_countries.map((country) => (
-                                                    <Country key={country.iso_3166_1} id={country.iso_3166_1} name={country.name} />
-                                                ))}
-                                            </CompanyGrid>
-                                        </CompanyContainer>
-                                    )}
+                                    {result.production_countries &&
+                                        result.production_countries.length > 0 && (
+                                            <CompanyContainer>
+                                                <ItemTitle>Production Countries</ItemTitle>
+                                                <CompanyGrid style={{ gridAutoRows: "40px" }}>
+                                                    {result.production_countries.map((country) => (
+                                                        <Country
+                                                            key={country.iso_3166_1}
+                                                            id={country.iso_3166_1}
+                                                            name={country.name}
+                                                        />
+                                                    ))}
+                                                </CompanyGrid>
+                                            </CompanyContainer>
+                                        )}
                                     {result.networks && result.networks.length > 0 && (
                                         <CompanyContainer>
                                             <ItemTitle>Networks</ItemTitle>
                                             <CompanyGrid style={{ gridAutoRows: "80px" }}>
                                                 {result.networks.map((network) => (
-                                                    <Company key={network.id} id={network.id} name={network.name} logoUrl={network.logo_path} />
+                                                    <Company
+                                                        key={network.id}
+                                                        id={network.id}
+                                                        name={network.name}
+                                                        logoUrl={network.logo_path}
+                                                    />
                                                 ))}
                                             </CompanyGrid>
                                         </CompanyContainer>
