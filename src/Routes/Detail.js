@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
-import Loader from "Components/Loader";
-import Company from "Components/Company";
-import Cast from "Components/Cast";
-import Tabs from "Components/Tabs";
-import Video from "Components/Video";
-import Country from "Components/Country";
-import Recommend from "Components/Recommend";
-import CollectionPoster from "Components/CollectionPoster";
-import Season from "Components/Season";
+import { useLocation, useParams, useHistory } from "react-router-dom";
+
+import { moviesApi, tvApi } from "../api";
+import Loader from "../Components/Loader";
+import Company from "../Components/Company";
+import Cast from "../Components/Cast";
+import Tabs from "../Components/Tabs";
+import Video from "../Components/Video";
+import Country from "../Components/Country";
+import Recommend from "../Components/Recommend";
+import CollectionPoster from "../Components/CollectionPoster";
+import Season from "../Components/Season";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -243,8 +246,52 @@ const CompanyGrid = styled.div`
     }
 `;
 
-const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
-    loading ? (
+const Detail = () => {
+    const { id } = useParams();
+    const { push } = useHistory();
+    const { pathname } = useLocation();
+
+    const [loading, setLoading] = useState(true);
+    const [detail, setDetail] = useState([]);
+    const [staff, setStaff] = useState([]);
+    const [recommend, setRecommend] = useState([]);
+    const [error, setError] = useState(null);
+
+    const getDetailData = async () => {
+        const parsedId = parseInt(id);
+        if (isNaN(parsedId)) {
+            return push("/");
+        }
+        try {
+            const isMovie = pathname.includes("/movie/");
+            if (isMovie) {
+                const { data: detail } = await moviesApi.movieDetail(parsedId);
+                const { data: staff } = await moviesApi.movieCast(parsedId);
+                const { data: recommend } = await moviesApi.recommendMovie(parsedId);
+                setDetail(detail);
+                setStaff(staff);
+                setRecommend(recommend);
+            } else {
+                const { data: detail } = await tvApi.showDetail(parsedId);
+                const { data: staff } = await tvApi.tvCast(parsedId);
+                const { data: recommend } = await tvApi.recommendTv(parsedId);
+                setDetail(detail);
+                setStaff(staff);
+                setRecommend(recommend);
+            }
+        } catch {
+            setError("Can't find any Information.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getDetailData();
+        return () => getDetailData();
+    }, []);
+
+    return loading ? (
         <>
             <Helmet>
                 <title>Loading | T-flix</title>
@@ -254,41 +301,41 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
     ) : (
         <Container>
             <Helmet>
-                <title>{result.title ? result.title : result.name} | T-flix</title>
+                <title>{detail.title ? detail.title : detail.name} | T-flix</title>
             </Helmet>
             <BackDrop
                 bgImage={
-                    result.backdrop_path
-                        ? `https://image.tmdb.org/t/p/original${result.backdrop_path}`
+                    detail.backdrop_path
+                        ? `https://image.tmdb.org/t/p/original${detail.backdrop_path}`
                         : null
                 }
             />
             <Content>
                 <Cover
                     bgImage={
-                        result.poster_path
-                            ? `https://image.tmdb.org/t/p/original${result.poster_path}`
-                            : require("../../Assets/noPosterSmall.png")
+                        detail.poster_path
+                            ? `https://image.tmdb.org/t/p/original${detail.poster_path}`
+                            : require("../Assets/noPosterSmall.png")
                     }
                 />
                 <Data>
-                    <MovieTitle>{result.title ? result.title : result.name}</MovieTitle>
+                    <MovieTitle>{detail.title ? detail.title : detail.name}</MovieTitle>
                     <ItemContainer>
                         <Item>
-                            {result.release_date
-                                ? result.release_date.substring(0, 4)
-                                : result.first_air_date.substring(0, 4)}
+                            {detail.release_date
+                                ? detail.release_date.slice(0, 4)
+                                : detail.first_air_date.slice(0, 4)}
                         </Item>
                         <Divider>•</Divider>
                         <Item>
-                            {result.episode_run_time
-                                ? result.episode_run_time[0]
-                                : result.runtime !== 0
-                                ? result.runtime
+                            {detail.episode_run_time
+                                ? detail.episode_run_time[0]
+                                : detail.runtime !== 0
+                                ? detail.runtime
                                 : 0}{" "}
                             min
                         </Item>
-                        {result.imdb_id && (
+                        {detail.imdb_id && (
                             <>
                                 <Divider>•</Divider>
                                 <Item
@@ -302,7 +349,7 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                 >
                                     <Imdb
                                         target="_blank"
-                                        href={`https://www.imdb.com/title/${result.imdb_id}`}
+                                        href={`https://www.imdb.com/title/${detail.imdb_id}`}
                                     >
                                         IMDb
                                     </Imdb>
@@ -314,20 +361,20 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                             <span role="img" aria-label="rating">
                                 ⭐{" "}
                             </span>
-                            {result.vote_average} / 10
+                            {detail.vote_average} / 10
                         </Item>
                     </ItemContainer>
                     <Description>
-                        <Overview>{result.overview}</Overview>
+                        <Overview>{detail.overview}</Overview>
                         <TabContainer>
                             <Tabs>
                                 <div label="Overview">
-                                    {result.genres && result.genres.length > 0 && (
+                                    {detail.genres && detail.genres.length > 0 && (
                                         <>
                                             <ItemTitle>Genres</ItemTitle>
                                             <Genre>
-                                                {result.genres.map((genre, index) =>
-                                                    index === result.genres.length - 1
+                                                {detail.genres.map((genre, index) =>
+                                                    index === detail.genres.length - 1
                                                         ? genre.name
                                                         : `${genre.name} • `
                                                 )}
@@ -355,11 +402,11 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             </span>
                                         </NoContentMessage>
                                     )}
-                                    {result.created_by && result.created_by.length > 0 && (
+                                    {detail.created_by && detail.created_by.length > 0 && (
                                         <>
                                             <ItemTitle>Creator</ItemTitle>
                                             <CreatorContainer>
-                                                {result.created_by.map((creator) => (
+                                                {detail.created_by.map((creator) => (
                                                     <Cast
                                                         key={creator.id}
                                                         id={creator.id}
@@ -370,32 +417,32 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             </CreatorContainer>
                                         </>
                                     )}
-                                    {result.belongs_to_collection && (
+                                    {detail.belongs_to_collection && (
                                         <>
                                             <ItemTitle>Collection</ItemTitle>
                                             <CollectionContainer>
                                                 <CollectionPoster
-                                                    id={result.belongs_to_collection.id}
+                                                    id={detail.belongs_to_collection.id}
                                                     imageUrl={
-                                                        result.belongs_to_collection.poster_path
+                                                        detail.belongs_to_collection.poster_path
                                                     }
-                                                    title={result.belongs_to_collection.name}
+                                                    title={detail.belongs_to_collection.name}
                                                 />
                                             </CollectionContainer>
                                         </>
                                     )}
-                                    {result.seasons && result.seasons.length > 0 ? (
-                                        result.seasons.length <= 3 ? (
+                                    {detail.seasons && detail.seasons.length > 0 ? (
+                                        detail.seasons.length <= 3 ? (
                                             <>
                                                 <ItemTitle>Seasons</ItemTitle>
                                                 <SeasonContainer>
-                                                    {result.seasons.map((season) => (
+                                                    {detail.seasons.map((season) => (
                                                         <Season
                                                             key={season.id}
                                                             id={season.season_number}
                                                             seasonNum={season.name}
                                                             imageUrl={season.poster_path}
-                                                            title={result.name}
+                                                            title={detail.name}
                                                         />
                                                     ))}
                                                 </SeasonContainer>
@@ -404,13 +451,13 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             <>
                                                 <ItemTitle>Seasons</ItemTitle>
                                                 <SeasonScroll>
-                                                    {result.seasons.map((season) => (
+                                                    {detail.seasons.map((season) => (
                                                         <Season
                                                             key={season.id}
                                                             id={season.season_number}
                                                             seasonNum={season.name}
                                                             imageUrl={season.poster_path}
-                                                            title={result.name}
+                                                            title={detail.name}
                                                         />
                                                     ))}
                                                 </SeasonScroll>
@@ -421,8 +468,8 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                 <div label="Trailers +">
                                     <ItemTitle>Videos</ItemTitle>
                                     <VideoContainer>
-                                        {result.videos.results.length > 0 ? (
-                                            result.videos.results.map((video) => (
+                                        {detail.videos.results.length > 0 ? (
+                                            detail.videos.results.map((video) => (
                                                 <Video
                                                     key={video.id}
                                                     id={video.id}
@@ -447,9 +494,9 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                 <div label="More Like This">
                                     <>
                                         <ItemTitle>Recommendations</ItemTitle>
-                                        {recommend.results && recommend.results.length > 0 ? (
+                                        {recommend.details && recommend.details.length > 0 ? (
                                             <RecommendContainer>
-                                                {recommend.results.map((movie) => (
+                                                {recommend.details.map((movie) => (
                                                     <Recommend
                                                         key={movie.id}
                                                         id={movie.id}
@@ -475,10 +522,10 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                 <div label="Details">
                                     <CompanyContainer>
                                         <ItemTitle>Production Companies</ItemTitle>
-                                        {result.production_companies &&
-                                        result.production_companies.length > 0 ? (
+                                        {detail.production_companies &&
+                                        detail.production_companies.length > 0 ? (
                                             <CompanyGrid style={{ gridAutoRows: "80px" }}>
-                                                {result.production_companies.map((company) => (
+                                                {detail.production_companies.map((company) => (
                                                     <Company
                                                         key={company.id}
                                                         id={company.id}
@@ -496,12 +543,12 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                             </NoContentMessage>
                                         )}
                                     </CompanyContainer>
-                                    {result.production_countries &&
-                                        result.production_countries.length > 0 && (
+                                    {detail.production_countries &&
+                                        detail.production_countries.length > 0 && (
                                             <CompanyContainer>
                                                 <ItemTitle>Production Countries</ItemTitle>
                                                 <CompanyGrid style={{ gridAutoRows: "40px" }}>
-                                                    {result.production_countries.map((country) => (
+                                                    {detail.production_countries.map((country) => (
                                                         <Country
                                                             key={country.iso_3166_1}
                                                             id={country.iso_3166_1}
@@ -511,11 +558,11 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
                                                 </CompanyGrid>
                                             </CompanyContainer>
                                         )}
-                                    {result.networks && result.networks.length > 0 && (
+                                    {detail.networks && detail.networks.length > 0 && (
                                         <CompanyContainer>
                                             <ItemTitle>Networks</ItemTitle>
                                             <CompanyGrid style={{ gridAutoRows: "80px" }}>
-                                                {result.networks.map((network) => (
+                                                {detail.networks.map((network) => (
                                                     <Company
                                                         key={network.id}
                                                         id={network.id}
@@ -534,11 +581,12 @@ const DetailPresenter = ({ result, staff, recommend, error, loading }) =>
             </Content>
         </Container>
     );
-
-DetailPresenter.propTypes = {
-    result: PropTypes.object,
-    error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
 };
 
-export default DetailPresenter;
+Detail.propTypes = {
+    detail: PropTypes.object,
+    error: PropTypes.string,
+    loading: PropTypes.bool,
+};
+
+export default Detail;

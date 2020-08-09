@@ -1,159 +1,73 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
-import Loader from "Components/Loader";
-import ActorImage from "Components/ActorImage";
+import { useParams, useHistory } from "react-router-dom";
 
-const Container = styled.div`
-    height: calc(100vh - 50px);
-    width: 100%;
-    padding: 50px;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
-        padding: 0px;
-    }
-`;
+import { personApi } from "../api";
+import Loader from "../Components/Loader";
+import ActorImage from "../Components/ActorImage";
+import {
+    Container,
+    BackDrop,
+    Content,
+    Cover,
+    Data,
+    ActorName,
+    ItemContainer,
+    Item,
+    Imdb,
+    Divider,
+    Description,
+    ItemTitle,
+    Biography,
+    NoContentMessage,
+    ImageContainer,
+    ImageScroll,
+} from "../Styles/PersonStyle";
 
-const BackDrop = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(${(props) => props.bgImage});
-    background-position: center center;
-    background-size: cover;
-    filter: blur(6px);
-    opacity: 0.7;
-`;
+const Person = () => {
+    const { id } = useParams();
+    const { push } = useHistory();
 
-const Content = styled.div`
-    display: flex;
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 5px;
-    width: 80%;
-    height: 100%;
-    position: relative;
-    z-index: 1;
-    font-size: 18px;
-    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
-        width: 95%;
-    }
-    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
-        width: 100%;
-        background-color: rgba(255, 255, 255, 0);
-        font-size: 16px;
-    }
-`;
+    const [loading, setLoading] = useState(true);
+    const [person, setPerson] = useState([]);
+    const [imageUrl, setImageUrl] = useState(require("../Assets/noActor.png"));
+    const [backDropUrl, setBackDropUrl] = useState(null);
 
-const Cover = styled.div`
-    width: 50%;
-    height: 100%;
-    background-image: url(${(props) => props.bgImage});
-    background-position: center center;
-    background-size: cover;
-    border-radius: 5px;
-    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
-        display: none;
-    }
-`;
+    const getPersonData = async () => {
+        const parsedId = parseInt(id);
+        if (isNaN(parsedId)) {
+            return push("/");
+        }
+        try {
+            const { data: person } = await await personApi.person(parsedId);
+            setPerson(person);
+            setImageUrl(`https://image.tmdb.org/t/p/original${person.profile_path}`);
+            setBackDropUrl(`https://image.tmdb.org/t/p/original${person.profile_path}`);
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-const Data = styled.div`
-    min-width: 45%;
-    width: 50%;
-    margin: 10px 20px;
-    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_PC}) {
-        width: 60%;
-        margin: 20px 20px 0px;
-    }
-    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
-        width: 100%;
-    }
-`;
+    const clickImage = (path) => {
+        if (window.innerWidth <= 992) {
+            return () => {
+                setBackDropUrl(`https://image.tmdb.org/t/p/original${path}`);
+            };
+        } else {
+            return () => {
+                setImageUrl(`https://image.tmdb.org/t/p/original${path}`);
+            };
+        }
+    };
 
-const ActorName = styled.h3`
-    font-size: 30px;
-    font-weight: 600;
-`;
+    useEffect(() => {
+        getPersonData();
+    }, []);
 
-const ItemContainer = styled.div`
-    margin: 20px 0;
-    display: flex;
-`;
-
-const Item = styled.span`
-    padding: 2px 0px;
-`;
-
-const Imdb = styled.a`
-    vertical-align: text-bottom;
-`;
-
-const Divider = styled.div`
-    margin: 0 10px;
-`;
-
-const Description = styled.div`
-    line-height: 1.5;
-    width: 100%;
-    height: 85%;
-    padding-right: 10px;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-        width: 8px;
-    }
-    &::-webkit-scrollbar-thumb {
-        background-color: ${(props) => props.theme.pinkColor};
-    }
-    &::-webkit-scrollbar-track {
-        border: 1px solid ${(props) => props.theme.pinkColor};
-    }
-`;
-
-const ItemTitle = styled.div`
-    font-weight: 600;
-    &:not(:first-child) {
-        margin-top: 20px;
-    }
-    margin-bottom: 5px;
-    opacity: 0.9;
-`;
-
-const Biography = styled.p`
-    opacity: 0.7;
-    margin-bottom: 20px;
-`;
-
-const NoContentMessage = styled.div`
-    font-size: 16px;
-    opacity: 0.9;
-`;
-
-const ImageContainer = styled.div`
-    display: flex;
-    width: 100%;
-`;
-
-const ImageScroll = styled.div`
-    display: flex;
-    overflow-x: auto;
-    &::-webkit-scrollbar {
-        height: 8px;
-    }
-    &::-webkit-scrollbar-track {
-        border: 1px solid ${(props) => props.theme.pinkColor};
-    }
-    &::-webkit-scrollbar-thumb {
-        background-color: ${(props) => props.theme.pinkColor};
-    }
-`;
-
-const PersonPresenter = ({ person, error, loading, imageUrl, imageClick, backDropUrl }) =>
-    loading ? (
+    return loading ? (
         <>
             <Helmet>
                 <title>Loading | T-flix</title>
@@ -167,13 +81,16 @@ const PersonPresenter = ({ person, error, loading, imageUrl, imageClick, backDro
             </Helmet>
             <BackDrop bgImage={person.profile_path ? backDropUrl : null} />
             <Content>
-                <Cover bgImage={person.profile_path ? imageUrl : require("../../Assets/noActor.png")} />
+                <Cover
+                    bgImage={person.profile_path ? imageUrl : require("../Assets/noActor.png")}
+                />
                 <Data>
                     <ActorName>{person.name ? person.name : "No Name"}</ActorName>
                     <ItemContainer>
                         {person.birthday && (
                             <Item>
-                                {person.birthday.substring(0, 4)} ~ {person.deathday && person.deathday.substring(0, 4)}
+                                {person.birthday.substring(0, 4)} ~{" "}
+                                {person.deathday && person.deathday.substring(0, 4)}
                             </Item>
                         )}
 
@@ -195,7 +112,10 @@ const PersonPresenter = ({ person, error, loading, imageUrl, imageClick, backDro
                                         padding: "0px 5px",
                                     }}
                                 >
-                                    <Imdb target="_blank" href={`https://www.imdb.com/name/${person.imdb_id}`}>
+                                    <Imdb
+                                        target="_blank"
+                                        href={`https://www.imdb.com/name/${person.imdb_id}`}
+                                    >
                                         IMDb
                                     </Imdb>
                                 </Item>
@@ -231,13 +151,23 @@ const PersonPresenter = ({ person, error, loading, imageUrl, imageClick, backDro
                                 {person.images.profiles.length <= 5 ? (
                                     <ImageContainer>
                                         {person.images.profiles.map((image, index) => (
-                                            <ActorImage onClick={imageClick(image.file_path)} key={index} id={index} imageUrl={image.file_path} />
+                                            <ActorImage
+                                                onClick={clickImage(image.file_path)}
+                                                key={index}
+                                                id={index}
+                                                imageUrl={image.file_path}
+                                            />
                                         ))}
                                     </ImageContainer>
                                 ) : (
                                     <ImageScroll>
                                         {person.images.profiles.map((image, index) => (
-                                            <ActorImage onClick={imageClick(image.file_path)} key={index} id={index} imageUrl={image.file_path} />
+                                            <ActorImage
+                                                onClick={clickImage(image.file_path)}
+                                                key={index}
+                                                id={index}
+                                                imageUrl={image.file_path}
+                                            />
                                         ))}
                                     </ImageScroll>
                                 )}
@@ -255,14 +185,15 @@ const PersonPresenter = ({ person, error, loading, imageUrl, imageClick, backDro
             </Content>
         </Container>
     );
+};
 
-PersonPresenter.propTypes = {
+Person.propTypes = {
     person: PropTypes.object,
     error: PropTypes.string,
     loading: PropTypes.bool,
     imageUrl: PropTypes.string,
-    imageClick: PropTypes.func,
     backDropUrl: PropTypes.string,
+    clickImage: PropTypes.func,
 };
 
-export default PersonPresenter;
+export default Person;

@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import { useParams, useHistory, useLocation } from "react-router-dom";
+
 import { tvApi } from "../api";
-import Loader from "Components/Loader";
-import Episode from "Components/Episode";
+import Loader from "../Components/Loader";
+import Episode from "../Components/Episode";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -117,7 +118,6 @@ const Seasons = () => {
     const [loading, setLoading] = useState(true);
     const [season, setSeason] = useState([]);
     const [showName, setShowName] = useState(null);
-    const [error, setError] = useState(null);
 
     const getSeasonData = async () => {
         const showName = pathname.split("/")[5];
@@ -130,8 +130,8 @@ const Seasons = () => {
             const { data: season } = await tvApi.seasons(tvId, parsedId);
             setSeason(season);
             setShowName(showName);
-        } catch {
-            setError("Can't find anything.");
+        } catch (e) {
+            console.log(e);
         } finally {
             setLoading(false);
         }

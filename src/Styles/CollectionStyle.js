@@ -1,11 +1,6 @@
-import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
-import { Helmet } from "react-helmet";
-import Loader from "Components/Loader";
-import Recommend from "Components/Recommend";
 
-const Container = styled.div`
+export const Container = styled.div`
     height: calc(100vh - 50px);
     width: 100%;
     position: relative;
@@ -19,7 +14,7 @@ const Container = styled.div`
     }
 `;
 
-const BackDrop = styled.div`
+export const BackDrop = styled.div`
     position: absolute;
     top: 0;
     left: 0;
@@ -32,7 +27,7 @@ const BackDrop = styled.div`
     opacity: 0.6;
 `;
 
-const Cover = styled.div`
+export const Cover = styled.div`
     width: 50%;
     height: 100%;
     background-image: url(${(props) => props.bgImage});
@@ -47,7 +42,7 @@ const Cover = styled.div`
     }
 `;
 
-const Content = styled.div`
+export const Content = styled.div`
     display: flex;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 5px;
@@ -64,7 +59,7 @@ const Content = styled.div`
     }
 `;
 
-const Data = styled.div`
+export const Data = styled.div`
     min-width: 45%;
     width: 50%;
     margin: 10px 20px;
@@ -79,7 +74,7 @@ const Data = styled.div`
     }
 `;
 
-const MovieTitle = styled.h3`
+export const MovieTitle = styled.h3`
     font-size: 30px;
     font-weight: 600;
     @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_TABLET}) {
@@ -87,13 +82,13 @@ const MovieTitle = styled.h3`
     }
 `;
 
-const Overview = styled.p`
+export const Overview = styled.p`
     opacity: 0.7;
     margin: 20px 0px;
     line-height: 1.5;
 `;
 
-const PosterContainer = styled.div`
+export const PosterContainer = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -112,55 +107,3 @@ const PosterContainer = styled.div`
         border: 1px solid ${(props) => props.theme.pinkColor};
     }
 `;
-
-const CollectionPresenter = ({ collection, error, loading }) =>
-    loading ? (
-        <>
-            <Helmet>
-                <title>Loading | T-flix</title>
-            </Helmet>
-            <Loader />
-        </>
-    ) : (
-        <Container>
-            <Helmet>
-                <title>{collection.name} | T-flix</title>
-            </Helmet>
-            <BackDrop bgImage={collection.backdrop_path ? `https://image.tmdb.org/t/p/original${collection.backdrop_path}` : null} />
-            <Content>
-                <Cover
-                    bgImage={
-                        collection.poster_path
-                            ? `https://image.tmdb.org/t/p/original${collection.poster_path}`
-                            : require("../../Assets/noPosterSmall.png")
-                    }
-                />
-                <Data>
-                    <MovieTitle>{collection.name}</MovieTitle>
-                    <Overview>{collection.overview}</Overview>
-                    {collection.parts && collection.parts.length > 0 && (
-                        <PosterContainer>
-                            {collection.parts.map((part) => (
-                                <Recommend
-                                    key={part.id}
-                                    id={part.id}
-                                    imageUrl={part.poster_path ? part.poster_path : require("../../Assets/noPosterSmall.png")}
-                                    title={part.title}
-                                    rating={part.vote_average}
-                                    isMovie={true}
-                                />
-                            ))}
-                        </PosterContainer>
-                    )}
-                </Data>
-            </Content>
-        </Container>
-    );
-
-CollectionPresenter.propTypes = {
-    collection: PropTypes.object,
-    error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-};
-
-export default CollectionPresenter;
