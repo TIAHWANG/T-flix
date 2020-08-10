@@ -11,8 +11,6 @@ const TabList = styled.ul`
     bottom: 0px;
 `;
 
-const TabContent = styled.div``;
-
 export default class extends React.Component {
     static propTypes = {
         children: PropTypes.instanceOf(Array).isRequired,
@@ -38,16 +36,23 @@ export default class extends React.Component {
 
         return (
             <>
-                <TabContent>
+                <>
                     {children.map((child) => {
                         if (child.props.label !== activeTab) return undefined;
                         return child.props.children;
                     })}
-                </TabContent>
+                </>
                 <TabList>
                     {children.map((child) => {
                         const { label } = child.props;
-                        return <Tab activeTab={activeTab} key={label} label={label} onClick={onClickTabItem} />;
+                        return (
+                            <Tab
+                                activeTab={activeTab}
+                                key={label}
+                                label={label}
+                                onClick={onClickTabItem}
+                            />
+                        );
                     })}
                 </TabList>
             </>

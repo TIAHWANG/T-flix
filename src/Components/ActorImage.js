@@ -29,6 +29,7 @@ const ActorImage = ({ id, imageUrl, onClick }) => (
 ActorImage.propTypes = {
     id: PropTypes.number.isRequired,
     imageUrl: PropTypes.string,
+    onClick: PropTypes.func,
 };
 
 export default ActorImage;

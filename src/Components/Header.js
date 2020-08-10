@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, withRouter } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 
 const Header = styled.header`
     background-color: ${(props) => props.theme.black};
@@ -22,7 +22,7 @@ const Header = styled.header`
         font-size: 14px;
     }
 `;
-const LogoContainer = styled.div`
+const LogoContainer = styled(Link)`
     width: 100px;
     height: 50px;
     padding-top: 2px;
@@ -67,21 +67,25 @@ const SLink = styled(Link)`
     }
 `;
 
-export default withRouter(({ location: { pathname } }) => (
-    <Header>
-        <LogoContainer>
-            <Logo bgUrl={require("../Assets/mainLogo.png")} />
-        </LogoContainer>
-        <List>
-            <ListItem current={pathname === "/"}>
-                <SLink to="/">Movies</SLink>
-            </ListItem>
-            <ListItem current={pathname === "/tv"}>
-                <SLink to="/tv">TV</SLink>
-            </ListItem>
-            <ListItem current={pathname === "/search"}>
-                <SLink to="/search">Search</SLink>
-            </ListItem>
-        </List>
-    </Header>
-));
+export default () => {
+    const { pathname } = useLocation();
+
+    return (
+        <Header>
+            <LogoContainer to="/">
+                <Logo bgUrl={require("../Assets/mainLogo.png")} />
+            </LogoContainer>
+            <List>
+                <ListItem current={pathname === "/" || pathname.includes("movie")}>
+                    <SLink to="/">Movies</SLink>
+                </ListItem>
+                <ListItem current={pathname === "/tv" || pathname.includes("tv")}>
+                    <SLink to="/tv">TV</SLink>
+                </ListItem>
+                <ListItem current={pathname === "/search"}>
+                    <SLink to="/search">Search</SLink>
+                </ListItem>
+            </List>
+        </Header>
+    );
+};

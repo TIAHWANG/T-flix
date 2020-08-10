@@ -8,19 +8,22 @@ const Container = styled.div`
 `;
 
 const Text = styled.span`
-    color: ${(props) => props.color};
+    color: ${(props) => props.theme.pinkColor};
     font-weight: 600;
+    font-size: 18px;
+    @media only screen and (max-width: ${(props) => props.theme.BREAK_POINT_MOBILE}) {
+        padding: 16px;
+    }
 `;
 
-const Message = ({ text, color }) => (
+const Message = ({ text }) => (
     <Container>
-        <Text color={color}>{text}</Text>
+        <Text>{text}</Text>
     </Container>
 );
 
 Message.propTypes = {
     text: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
 };
 
 export default Message;
